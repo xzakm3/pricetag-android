@@ -30,9 +30,24 @@ import com.example.pricetag.ui.login.LoginResult;
 import com.example.pricetag.ui.login.LoginViewModel;
 import com.example.pricetag.ui.login.LoginViewModelFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+
+    @BindView(R.id.signupButton)
+    Button signupButton;
+    @BindView(R.id.loginButton)
+    Button loginButton;
+    // @BindView(R.id.loading)
+    // Button loadingProgressBar;
+    @BindView(R.id.username)
+    EditText usernameEditText;
+    @BindView(R.id.password)
+    EditText passwordEditText;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.loginButton);
-        final Button signupButton = findViewById(R.id.signupButton);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        ButterKnife.bind(this);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -69,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (loginResult == null) {
                     return;
                 }
-                loadingProgressBar.setVisibility(View.GONE);
+                // loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
                 }
@@ -117,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+                // loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
