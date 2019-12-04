@@ -22,4 +22,10 @@
         android:name="com.example.pricetag.ui.shops.ShopsFragment"
         android:label="@string/title_shops"
         tools:layout="@layout/fragment_shops" />
+
+    <fragment
+        android:id="@+id/navigation_lists"
+        android:name="com.example.pricetag.ui.lists.ListsFragment"
+        android:label="@string/title_lists"
+        tools:layout="@layout/fragment_lists" />
 </navigation>
