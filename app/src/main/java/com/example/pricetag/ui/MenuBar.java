@@ -1,4 +1,4 @@
-package com.example.pricetag;
+package com.example.pricetag.ui;
 
 import android.os.Bundle;
 
@@ -8,9 +8,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.pricetag.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class ProductsIndexActivity extends AppCompatActivity {
+public class MenuBar extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
