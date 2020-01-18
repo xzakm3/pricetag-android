@@ -6,48 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.pricetag.IndexFragment;
 import com.example.pricetag.R;
 
-import java.io.Serializable;
 import java.util.Arrays;
-import java.util.List;
 
-public class ListsFragment extends Fragment {
+public class ListsFragment extends IndexFragment {
 
-    private List<String> data;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lists, container, false);
 
-        initData();
-        Bundle args = setFragmentArgs();
-
-        Fragment fragment = new IndexFragment();
-        fragment.setArguments(args);
-
-        // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit(); // save the changes
-
+        View view = super.onCreateView(inflater, container, savedInstanceState, this);
         return view;
     }
 
-    private void initData() {
-        data = Arrays.asList("Sunday's specialty", "Thursday shopping", "Pancakes");
-    }
-
-    private Bundle setFragmentArgs() {
-        Bundle args = new Bundle();
-        args.putInt("heading", R.string.lists_heading);
-        args.putSerializable("data", (Serializable) data);
-        return args;
+    @Override
+    public void loadData() {
+        this.data = Arrays.asList("Sunday's specialty", "Thursday shopping", "Pancakes");
+        this.headingText = R.string.lists_heading;
     }
 }

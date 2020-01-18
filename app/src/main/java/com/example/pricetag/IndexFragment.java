@@ -35,24 +35,25 @@ public class IndexFragment extends Fragment {
 
     private RecyclerView.Adapter indexAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private List<String> data;
+
+    protected List<String> data;
+    protected int headingText;
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    protected View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState, IndexFragment fragment) {
 
 
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         ButterKnife.bind(this, view);
 
-        loadData();
+        fragment.loadData();
         loadContent();
 
         return view;
     }
 
-    private void loadData() {
-        data = (List<String>)getArguments().getSerializable("data");
+    public void loadData() {
     }
 
     private void loadContent() {
@@ -61,8 +62,7 @@ public class IndexFragment extends Fragment {
     }
 
     private void loadHeading() {
-        int headingId = getArguments().getInt("heading");
-        headingTextView.setText(headingId);
+        headingTextView.setText(headingText);
     }
 
     private void loadRecyclerView() {
