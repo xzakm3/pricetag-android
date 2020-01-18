@@ -20,4 +20,5 @@
     <string name="search_edit_text_hint">Search by name</string>
     <string name="products_heading">Products</string>
     <string name="shops_heading">Shops</string>
+    <string name="lists_heading">Lists</string>
 </resources>
