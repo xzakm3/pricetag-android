@@ -1,4 +1,4 @@
-package com.example.pricetag;
+package com.example.pricetag.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

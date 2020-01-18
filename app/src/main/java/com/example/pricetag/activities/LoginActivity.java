@@ -1,4 +1,4 @@
-package com.example.pricetag;
+package com.example.pricetag.activities;
 
 import android.app.Activity;
 
@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
