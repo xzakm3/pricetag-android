@@ -1,6 +1,8 @@
 package com.example.pricetag.templates.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -10,51 +12,68 @@ import com.example.pricetag.R;
 
 import java.util.List;
 
-public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.MyViewHolder> {
-    private List<String> mDataset;
+public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> {
+    private List<String> items;
+    private LayoutInflater mInflater;
+    private ItemClickListener mClickListener;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView textView;
-        public MyViewHolder(TextView v) {
-            super(v);
-            textView = v;
+    // data is passed into the constructor
+    public IndexAdapter(Context context, List<String> data) {
+        this.mInflater = LayoutInflater.from(context);
+        this.items = data;
+    }
+
+    // inflates the row layout from xml when needed
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.index_recyclerview_row, parent, false);
+        return new ViewHolder(view);
+    }
+
+    // binds the data to the TextView in each row
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        String item = items.get(position);
+        holder.itemTextView.setText(item);
+
+    }
+
+    // total number of rows
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+
+    // stores and recycles views as they are scrolled off screen
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView itemTextView;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            itemTextView = itemView.findViewById(R.id.name);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public IndexAdapter(List<String> myDataset) {
-        mDataset = myDataset;
+    // convenience method for getting data at click position
+    String getItem(int id) {
+        return items.get(id);
     }
 
-    // Create new views (invoked by the layout manager)
-    @Override
-    public IndexAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                        int viewType) {
-        // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.index_recyclerview_row, parent, false);
-
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.textView.setText(mDataset.get(position));
-
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return mDataset.size();
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 }
 

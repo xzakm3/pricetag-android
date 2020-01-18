@@ -16,4 +16,7 @@
     <string name="title_products">Products</string>
     <string name="title_shops">Shops</string>
     <string name="title_lists">Lists</string>
+    <string name="search_button_text">Search</string>
+    <string name="search_edit_text_hint">Search by name</string>
+    <string name="products_heading">Products</string>
 </resources>

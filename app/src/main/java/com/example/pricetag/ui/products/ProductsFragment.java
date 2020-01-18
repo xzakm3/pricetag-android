@@ -26,6 +26,9 @@ public class ProductsFragment extends Fragment {
 
     private ProductsViewModel productsViewModel;
 
+    @BindView(R.id.headingTextView)
+    TextView headingTextView;
+
     @BindView(R.id.searchTextView)
     TextView searchTextView;
 
@@ -35,8 +38,9 @@ public class ProductsFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter indexAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private List<String> data;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,20 +50,23 @@ public class ProductsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_products, container, false);
         ButterKnife.bind(this, view);
 
-        List<String> places = Arrays.asList("Buenos Aires", "Córdoba", "La Plata");
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new IndexAdapter(places);
-        recyclerView.setAdapter(mAdapter);
+        initData();
+        initContent();
 
         return view;
+    }
+
+    private void initData() {
+        data = Arrays.asList("Buenos Aires", "Córdoba", "La Plata");
+    }
+
+    private void initContent() {
+        headingTextView.setText(R.string.products_heading);
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        indexAdapter = new IndexAdapter(getActivity(), data);
+        recyclerView.setAdapter(indexAdapter);
     }
 }
