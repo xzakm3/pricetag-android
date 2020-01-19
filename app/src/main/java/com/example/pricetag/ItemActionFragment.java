@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,21 +15,41 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.templates.adapters.IndexAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IndexFragment extends Fragment {
+public class ItemActionFragment extends Fragment {
     @BindView(R.id.headingTextView)
     TextView headingTextView;
 
-    @BindView(R.id.searchTextView)
-    TextView searchTextView;
+    @BindView(R.id.nameTextView)
+    TextView nameTextView;
 
-    @BindView(R.id.searchButton)
-    Button searchButton;
+    @BindView(R.id.addressTextView)
+    TextView addressTextView;
+
+    @BindView(R.id.itemToChooseTextView)
+    TextView itemToChooseTextView;
+
+    @BindView(R.id.actionTextView)
+    TextView actionTextView;
+
+    @BindView(R.id.nameEditText)
+    EditText nameEditText;
+
+    @BindView(R.id.addressEditText)
+    EditText addressEditText;
+
+    @BindView(R.id.itemToChooseSpinner)
+    Spinner itemToChooseSpinner;
+
+    @BindView(R.id.addActionButton)
+    FloatingActionButton addActionButton;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -40,19 +62,25 @@ public class IndexFragment extends Fragment {
 
 
     protected View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState, IndexFragment fragment) {
+                             ViewGroup container, Bundle savedInstanceState, ItemActionFragment fragment) {
 
 
-        View view = inflater.inflate(R.layout.fragment_index, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_action, container, false);
         ButterKnife.bind(this, view);
 
-        fragment.loadData();
+        loadD();
         loadContent();
+
 
         return view;
     }
 
     public void loadData() {
+
+    }
+
+    public void loadD() {
+        this.data = Arrays.asList("Orange", "Lemon", "Potato", "Orange", "Lemon", "Potato", "Orange", "Lemon", "Potato");
     }
 
     private void loadContent() {
@@ -61,14 +89,14 @@ public class IndexFragment extends Fragment {
     }
 
     private void loadHeading() {
-        headingTextView.setText(headingText);
+        this.headingTextView.setText(R.string.shops_heading);
     }
 
     private void loadRecyclerView() {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        indexAdapter = new IndexAdapter(getActivity(), data);
+        indexAdapter = new IndexAdapter(getActivity(), this.data);
         recyclerView.setAdapter(indexAdapter);
     }
 }

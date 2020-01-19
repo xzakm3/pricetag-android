@@ -21,4 +21,8 @@
     <string name="products_heading">Products</string>
     <string name="shops_heading">Shops</string>
     <string name="lists_heading">Lists</string>
+    <string name="write_name">Write name</string>
+    <string name="write_address">Write address</string>
+    <string name="name_text">Name:</string>
+    <string name="address_text">Address:</string>
 </resources>
