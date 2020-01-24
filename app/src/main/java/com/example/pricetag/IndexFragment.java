@@ -12,7 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pricetag.templates.adapters.IndexAdapter;
+import com.example.pricetag.data.model.Item;
+import com.example.pricetag.templates.IndexAdapter;
 
 import java.util.List;
 
@@ -35,13 +36,12 @@ public class IndexFragment extends Fragment {
     private RecyclerView.Adapter indexAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    protected List<String> data;
+    protected List<? extends Item> data;
     protected int headingText;
 
 
     protected View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState, IndexFragment fragment) {
-
 
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         ButterKnife.bind(this, view);
@@ -70,5 +70,7 @@ public class IndexFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         indexAdapter = new IndexAdapter(getActivity(), data);
         recyclerView.setAdapter(indexAdapter);
+
+
     }
 }

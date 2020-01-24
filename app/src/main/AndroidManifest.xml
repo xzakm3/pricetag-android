@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MenuBar"
+            android:name=".bottomBar.MenuBar"
             android:label="@string/title_activity_products_index">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

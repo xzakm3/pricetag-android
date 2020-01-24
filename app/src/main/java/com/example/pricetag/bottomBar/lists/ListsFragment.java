@@ -1,4 +1,4 @@
-package com.example.pricetag.ui.lists;
+package com.example.pricetag.bottomBar.lists;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 
 import com.example.pricetag.IndexFragment;
 import com.example.pricetag.R;
+import com.example.pricetag.data.model.ShoppingList;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ListsFragment extends IndexFragment {
 
@@ -18,13 +20,21 @@ public class ListsFragment extends IndexFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View view = super.onCreateView(inflater, container, savedInstanceState, this);
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState, this);
     }
 
     @Override
     public void loadData() {
-        this.data = Arrays.asList("Sunday's specialty", "Thursday shopping", "Pancakes");
+        this.data = generateData();
         this.headingText = R.string.lists_heading;
+    }
+
+    private List<ShoppingList> generateData() {
+        List<ShoppingList> d = Arrays.asList(
+                new ShoppingList(1, "Sunday's specialty"),
+                new ShoppingList(2, "Thursday shopping"),
+                new ShoppingList(3, "Pancakes")
+        );
+        return d;
     }
 }

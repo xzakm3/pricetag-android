@@ -1,4 +1,4 @@
-package com.example.pricetag.ui.login;
+package com.example.pricetag.bottomBar.login;
 
 /**
  * Class exposing authenticated user details to the UI.

@@ -1,4 +1,4 @@
-package com.example.pricetag.ui.home;
+package com.example.pricetag.bottomBar.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,7 +13,7 @@ public class HomeViewModel extends ViewModel {
         mText.setValue("This is home fragment");
     }
 
-    public LiveData<String> getText() {
+    LiveData<String> getText() {
         return mText;
     }
 }

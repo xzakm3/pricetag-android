@@ -23,11 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pricetag.R;
-import com.example.pricetag.ui.login.LoggedInUserView;
-import com.example.pricetag.ui.login.LoginFormState;
-import com.example.pricetag.ui.login.LoginResult;
-import com.example.pricetag.ui.login.LoginViewModel;
-import com.example.pricetag.ui.login.LoginViewModelFactory;
+import com.example.pricetag.bottomBar.login.LoggedInUserView;
+import com.example.pricetag.bottomBar.login.LoginFormState;
+import com.example.pricetag.bottomBar.login.LoginResult;
+import com.example.pricetag.bottomBar.login.LoginViewModel;
+import com.example.pricetag.bottomBar.login.LoginViewModelFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
