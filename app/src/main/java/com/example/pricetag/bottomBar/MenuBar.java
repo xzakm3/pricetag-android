@@ -1,4 +1,4 @@
-package com.example.pricetag.ui;
+package com.example.pricetag.bottomBar;
 
 import android.os.Bundle;
 
@@ -15,6 +15,7 @@ public class MenuBar extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_menu_bar);
         BottomNavigationView navView = findViewById(R.id.nav_view);

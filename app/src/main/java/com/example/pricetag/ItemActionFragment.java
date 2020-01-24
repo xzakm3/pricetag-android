@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -14,7 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pricetag.templates.adapters.IndexAdapter;
+import com.example.pricetag.data.model.Item;
+import com.example.pricetag.data.model.Product;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
@@ -57,30 +57,41 @@ public class ItemActionFragment extends Fragment {
     private RecyclerView.Adapter indexAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    protected List<String> data;
+    protected List<? extends Item> data;
     protected int headingText;
 
-
-    protected View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState, ItemActionFragment fragment) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
 
 
         View view = inflater.inflate(R.layout.fragment_item_action, container, false);
         ButterKnife.bind(this, view);
 
-        loadD();
+        loadData();
         loadContent();
 
 
         return view;
     }
 
-    public void loadData() {
-
+    private void loadData() {
+        this.data = generatedata();
     }
 
-    public void loadD() {
-        this.data = Arrays.asList("Orange", "Lemon", "Potato", "Orange", "Lemon", "Potato", "Orange", "Lemon", "Potato");
+    private List<? extends Item> generatedata() {
+        return Arrays.asList(
+                new Product(1, "Orange"),
+                new Product(2, "Lemon"),
+                new Product(3, "Potato"),
+                new Product(4, "Pepper"),
+                new Product(5, "Cucumber"),
+                new Product(6, "Rice"),
+                new Product(7, "Bread"),
+                new Product(8, "Milk"),
+                new Product(9, "Sugar"),
+                new Product(10, "Slat")
+        );
     }
 
     private void loadContent() {
@@ -96,7 +107,7 @@ public class ItemActionFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        indexAdapter = new IndexAdapter(getActivity(), this.data);
+        // indexAdapter = new IndexAdapter(getActivity(), this.data, this);
         recyclerView.setAdapter(indexAdapter);
     }
 }

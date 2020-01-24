@@ -1,4 +1,4 @@
-package com.example.pricetag.ui.login;
+package com.example.pricetag.bottomBar.login;
 
 import androidx.annotation.Nullable;
 
