@@ -28,4 +28,6 @@
     <string name="name_text">Name:</string>
     <string name="address_text">Address:</string>
     <string name="login">Log in</string>
+    <string name="loginFieldsError">Please fill all fields</string>
+    <string name="signupFieldsError">Passwords needs to be the same. All fields are mandatory.</string>
 </resources>
