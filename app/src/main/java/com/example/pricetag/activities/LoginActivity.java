@@ -53,9 +53,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
         loginButton.setOnClickListener(v -> {
-            UserRepository.login(
-                    new LoginRequest(usernameEditText.getText().toString(), passwordEditText.getText().toString()),
-                    this);
+            LoginRequest request = new LoginRequest(usernameEditText.getText().toString(), passwordEditText.getText().toString(), this);
+
+            if (request.validateRequest()) {
+                UserRepository.login(request, this);
+            }
+
         });
 
         signupButton.setOnClickListener(v -> {
@@ -63,7 +66,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
+        Preferences.removeAccessToken(this);
+        
         if (Preferences.getAccessToken(this) != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

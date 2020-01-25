@@ -4,17 +4,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pricetag.R;
-import com.example.pricetag.data.requests.user.SignupRequest;
 import com.example.pricetag.data.repositories.user.UserRepository;
+import com.example.pricetag.data.requests.user.SignupRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -41,13 +39,11 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     protected void handleSubmitForm(View view) {
-        SignupRequest user = new SignupRequest(username.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString());
-        if (user.validate()) {
-            UserRepository.signupUser(user, this);
-        } else {
-            Toasty.error(this, "This is an error toast.", Toast.LENGTH_SHORT, true).show();
-        }
+        SignupRequest user = new SignupRequest(username.getText().toString(), password.getText().toString(), passwordConfirm.getText().toString(), this);
 
+        if (user.validateRequest()) {
+            UserRepository.signupUser(user, this);
+        }
     }
 
 
