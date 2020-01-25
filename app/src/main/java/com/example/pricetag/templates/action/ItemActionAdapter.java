@@ -9,18 +9,20 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
+import com.example.pricetag.data.interfaces.Itemable;
+import com.example.pricetag.data.model.ActionFragmentItem;
 import com.example.pricetag.data.model.Item;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.ViewHolder> {
-    private List<? extends Item> items;
+    private List<ActionFragmentItem> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public ItemActionAdapter(Context context, List<? extends Item> data) {
+    public ItemActionAdapter(Context context, List<ActionFragmentItem> data) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
     }
@@ -35,15 +37,15 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int id = items.get(position).getId();
-        holder.setId(id);
+        int number = items.get(position).getNumber();
+        holder.setNumber(number);
 
         String name = items.get(position).getName();
         holder.nameTextView.setText(name);
 
         holder.deleteActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int itemId = holder.getId();
+
             }
         });
 
@@ -58,7 +60,7 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        int id;
+        int number;
         TextView nameTextView;
         TextView numberTextView;
         FloatingActionButton deleteActionButton;
@@ -70,12 +72,12 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
             deleteActionButton = itemView.findViewById(R.id.deletefloatingActionButton);
         }
 
-        void setId(int id) {
-            this.id = id;
+        void setNumber(int number) {
+            this.number = number;
         }
 
-        int getId() {
-            return this.id;
+        int getNumber() {
+            return this.number;
         }
 
         @Override
