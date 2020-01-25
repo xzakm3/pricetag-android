@@ -1,4 +1,4 @@
-package com.example.pricetag.data;
+package com.example.pricetag.data.interfaces;
 
 public interface Itemable {
     String getName();

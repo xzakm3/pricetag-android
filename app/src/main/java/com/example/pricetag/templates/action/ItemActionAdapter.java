@@ -1,4 +1,4 @@
-package com.example.pricetag.templates;
+package com.example.pricetag.templates.action;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
@@ -15,13 +14,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> {
+public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.ViewHolder> {
     private List<? extends Item> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public IndexAdapter(Context context, List<? extends Item> data) {
+    public ItemActionAdapter(Context context, List<? extends Item> data) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
     }
@@ -29,25 +28,18 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.index_recyclerview_row, parent, false);
+        View view = mInflater.inflate(R.layout.item_action_recyclerview_row, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String name = items.get(position).getName();
-        holder.itemTextView.setText(name);
-
         int id = items.get(position).getId();
         holder.setId(id);
 
-        holder.editActionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // int itemId = holder.getId();
-                Navigation.findNavController(v).navigate(R.id.action_navigation_products_to_item_action_fragment);
-            }
-        });
+        String name = items.get(position).getName();
+        holder.nameTextView.setText(name);
 
         holder.deleteActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -67,15 +59,15 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         int id;
-        TextView itemTextView;
-        FloatingActionButton editActionButton;
+        TextView nameTextView;
+        TextView numberTextView;
         FloatingActionButton deleteActionButton;
 
         ViewHolder(View itemView) {
             super(itemView);
-            itemTextView = itemView.findViewById(R.id.nameTextView);
-            editActionButton = itemView.findViewById(R.id.editButton);
-            deleteActionButton = itemView.findViewById(R.id.deleteButton);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
+            numberTextView = itemView.findViewById(R.id.numberTextView);
+            deleteActionButton = itemView.findViewById(R.id.deletefloatingActionButton);
         }
 
         void setId(int id) {
@@ -107,4 +99,3 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
         void onItemClick(View view, int position);
     }
 }
-

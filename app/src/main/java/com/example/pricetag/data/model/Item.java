@@ -1,6 +1,6 @@
 package com.example.pricetag.data.model;
 
-import com.example.pricetag.data.Itemable;
+import com.example.pricetag.data.interfaces.Itemable;
 
 public class Item implements Itemable {
     @Override

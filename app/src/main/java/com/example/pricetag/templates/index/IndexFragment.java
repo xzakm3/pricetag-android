@@ -1,4 +1,4 @@
-package com.example.pricetag;
+package com.example.pricetag.templates.index;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,15 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pricetag.R;
 import com.example.pricetag.data.model.Item;
-import com.example.pricetag.templates.IndexAdapter;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IndexFragment extends Fragment {
+public class IndexFragment extends Fragment implements Loadable {
     @BindView(R.id.headingTextView)
     TextView headingTextView;
 
@@ -52,8 +52,7 @@ public class IndexFragment extends Fragment {
         return view;
     }
 
-    public void loadData() {
-    }
+
 
     private void loadContent() {
         loadHeading();
@@ -71,6 +70,11 @@ public class IndexFragment extends Fragment {
         indexAdapter = new IndexAdapter(getActivity(), data);
         recyclerView.setAdapter(indexAdapter);
 
+
+    }
+
+    @Override
+    public void loadData() {
 
     }
 }

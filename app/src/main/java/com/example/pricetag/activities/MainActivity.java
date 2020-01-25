@@ -1,4 +1,4 @@
-package com.example.pricetag.bottomBar;
+package com.example.pricetag.activities;
 
 import android.os.Bundle;
 
@@ -11,7 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.pricetag.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MenuBar extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_products">
+    app:startDestination="@id/navigation_home">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/item_action_fragment"
-        android:name="com.example.pricetag.ItemActionFragment"
+        android:name="com.example.pricetag.templates.action.ItemActionFragment"
         android:label="@string/title_item_action"
         tools:layout="@layout/fragment_item_action" />
 </navigation>

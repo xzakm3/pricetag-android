@@ -2,7 +2,7 @@ package com.example.pricetag.data.model;
 
 import java.sql.Timestamp;
 
-public class ShoppingList extends Item{
+public class ShoppingList extends Item {
     private int id;
     private String name;
     private int userId;
