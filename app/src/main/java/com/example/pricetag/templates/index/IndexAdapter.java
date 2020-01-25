@@ -21,7 +21,7 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    IndexAdapter(Context context, List<? extends Item> data) {
+    public IndexAdapter(Context context, List<? extends Item> data) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
     }

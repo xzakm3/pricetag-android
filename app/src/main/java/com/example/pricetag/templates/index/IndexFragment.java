@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IndexFragment extends Fragment implements Loadable {
+abstract public class IndexFragment extends Fragment implements Loadable {
     @BindView(R.id.headingTextView)
     TextView headingTextView;
 
@@ -31,9 +31,9 @@ public class IndexFragment extends Fragment implements Loadable {
     Button searchButton;
 
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
 
-    private RecyclerView.Adapter indexAdapter;
+    protected RecyclerView.Adapter indexAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     protected List<? extends Item> data;
@@ -67,11 +67,8 @@ public class IndexFragment extends Fragment implements Loadable {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        indexAdapter = new IndexAdapter(getActivity(), data);
-        recyclerView.setAdapter(indexAdapter);
-
-
     }
+
 
     @Override
     public void loadData() {

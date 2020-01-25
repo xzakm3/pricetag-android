@@ -7,14 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.example.pricetag.data.repositories.product.ProductRepository;
+import com.example.pricetag.templates.index.IndexAdapter;
 import com.example.pricetag.templates.index.IndexFragment;
 import com.example.pricetag.R;
 import com.example.pricetag.data.model.Product;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class ProductsFragment extends IndexFragment {
+public class ProductsFragment extends IndexFragment implements ProductCallbacks {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -24,18 +25,17 @@ public class ProductsFragment extends IndexFragment {
 
     @Override
     public void loadData() {
-        this.data = generateData();
         this.headingText = R.string.products_heading;
+
+        ProductRepository.getProducts(this);
     }
 
-    private List<Product> generateData() {
-        List<Product> d = Arrays.asList(
-                new Product(1, "Orange"),
-                new Product(2, "Lemon"),
-                new Product(3, "Potato"),
-                new Product(4, "Pepper"),
-                new Product(5, "Cucumber")
-        );
-        return d;
+    @Override
+    public void setProductData(List<Product> products) {
+        this.data = products;
+
+        indexAdapter = new IndexAdapter(getActivity(), data);
+        recyclerView.setAdapter(indexAdapter);
     }
+
 }

@@ -1,12 +1,23 @@
 package com.example.pricetag.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Timestamp;
 
 public class Product extends Item {
+
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("name")
     private String name;
+
     private int userId;
+
+    @SerializedName("created_at")
     private Timestamp createdAt;
+
+    @SerializedName("updated_at")
     private Timestamp updateAt;
 
     public Product(int id, String name) {
