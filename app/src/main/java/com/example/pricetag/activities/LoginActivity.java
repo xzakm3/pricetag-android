@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        
+
         if (Preferences.getAccessToken(this) != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

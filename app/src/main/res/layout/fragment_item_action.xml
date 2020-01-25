@@ -117,14 +117,13 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="3" />
 
-        <TextView
-            android:id="@+id/actionTextView"
+        <EditText
+            android:id="@+id/numberEditText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="2"
             android:gravity="center_horizontal|center_vertical"
-            android:text="quantity"
             android:textSize="18dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

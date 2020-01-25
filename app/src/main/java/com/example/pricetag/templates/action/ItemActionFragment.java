@@ -37,8 +37,8 @@ public class ItemActionFragment extends Fragment {
     @BindView(R.id.itemToChooseTextView)
     TextView itemToChooseTextView;
 
-    @BindView(R.id.actionTextView)
-    TextView actionTextView;
+    @BindView(R.id.numberEditText)
+    EditText numberEditText;
 
     @BindView(R.id.nameEditText)
     EditText nameEditText;
