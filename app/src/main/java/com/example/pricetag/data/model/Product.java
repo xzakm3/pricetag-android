@@ -19,16 +19,7 @@ public class Product extends Item {
         super(id, name);
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
     public ItemType getType() { return ItemType.PRODUCT; }
-
-    public void setName(String name) {
-        super.setName(name);
-    }
 
     public Product(int id, String name, int userId, Timestamp createdAt, Timestamp updateAt) {
         super(id, name);
