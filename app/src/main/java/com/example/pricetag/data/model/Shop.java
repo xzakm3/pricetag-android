@@ -1,14 +1,26 @@
 package com.example.pricetag.data.model;
 
 import com.example.pricetag.utils.ItemType;
+import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Shop extends Item {
-    private String address;
     private int userId;
+
+    @SerializedName("address")
+    private String address;
+
+    @SerializedName("created_at")
     private Timestamp createdAt;
+
+    @SerializedName("updated_at")
     private Timestamp updatedAt;
+
+    @SerializedName("product_in_shops_attributes")
+    private List<ProductInShop> productInShopAttributes = new ArrayList<>();
 
     public Shop(int id, String name, String address, int userId, Timestamp createdAt, Timestamp updatedAt) {
         super(id, name);

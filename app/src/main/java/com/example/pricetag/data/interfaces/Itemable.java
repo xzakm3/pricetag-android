@@ -7,4 +7,5 @@ public interface Itemable {
     ItemType getType();
     String getName();
     String getEntity();
+    float getNumber();
 }

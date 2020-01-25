@@ -4,6 +4,8 @@ import com.example.pricetag.utils.ItemType;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product extends Item {
 
@@ -14,6 +16,9 @@ public class Product extends Item {
 
     @SerializedName("updated_at")
     private Timestamp updateAt;
+
+    @SerializedName("product_in_shops_attributes")
+    private List<ProductInShop> productInShopAttributes = new ArrayList<>();
 
     public Product(int id, String name) {
         super(id, name);
@@ -55,5 +60,10 @@ public class Product extends Item {
     @Override
     public String getEntity() {
         return "products";
+    }
+
+    @Override
+    public float getNumber() {
+        return 0;
     }
 }

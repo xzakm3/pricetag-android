@@ -36,11 +36,21 @@ public class Item implements Itemable {
     }
 
     @Override
+    public float getNumber() {
+        return 0;
+    }
+
+    @Override
     public ItemType getType() {
         return null;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

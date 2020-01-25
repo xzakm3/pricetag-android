@@ -9,22 +9,22 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
-import com.example.pricetag.data.interfaces.Itemable;
-import com.example.pricetag.data.model.ActionFragmentItem;
-import com.example.pricetag.data.model.Item;
+import com.example.pricetag.data.model.ActionFragmentItemable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.ViewHolder> {
-    private List<ActionFragmentItem> items;
+    private List<ActionFragmentItemable> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private ItemActionFragment fragment;
 
     // data is passed into the constructor
-    public ItemActionAdapter(Context context, List<ActionFragmentItem> data) {
+    public ItemActionAdapter(Context context, List<ActionFragmentItemable> data, ItemActionFragment fragment) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
+        this.fragment = fragment;
     }
 
     // inflates the row layout from xml when needed
@@ -37,16 +37,17 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int number = items.get(position).getNumber();
-        holder.setNumber(number);
+        float number = items.get(position).getNumber();
+        holder.numberTextView.setText(String.valueOf(number));
 
         String name = items.get(position).getName();
         holder.nameTextView.setText(name);
 
-        holder.deleteActionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
+        holder.deleteActionButton.setOnClickListener(v -> {
+            // TODO - delete the item
+            // TODO - mark the destroy flag as 1
+            // TODO - hide from the interface
+            fragment.deleteData(position);
         });
 
     }
