@@ -15,14 +15,14 @@
     <string name="title_home">Home</string>
     <string name="title_products">Products</string>
     <string name="title_shops">Shops</string>
-    <string name="title_lists">Lists</string>
+    <string name="title_lists">Shopping lists</string>
     <string name="title_index">Index</string>
     <string name="title_item_action">Item action</string>
     <string name="search_button_text">Search</string>
     <string name="search_edit_text_hint">Search by name</string>
     <string name="products_heading">Products</string>
     <string name="shops_heading">Shops</string>
-    <string name="lists_heading">Lists</string>
+    <string name="lists_heading">Shopping lists</string>
     <string name="write_name">Write name</string>
     <string name="write_address">Write address</string>
     <string name="name_text">Name:</string>

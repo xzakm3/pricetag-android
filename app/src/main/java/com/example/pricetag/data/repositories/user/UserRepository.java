@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class UserRepository {
 
-    public static final UserService service = RetrofitInstance.get().create(UserService.class);
+    private static final UserService service = RetrofitInstance.getBaseInstance().create(UserService.class);
 
     public static void signupUser(SignupRequest signupRequest, Activity context) {
         // Define our request and enqueue
@@ -56,11 +56,11 @@ public class UserRepository {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(context, MainActivity.class);
-                    Preferences.setAccessToken(context, response.body().getToken());
+                    Preferences.setAccessToken(response.body().getToken());
                     context.startActivity(intent);
 
                 } else {
-                    Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(context, "Login credentials are wrong!", Toast.LENGTH_SHORT, true).show();
                 }
             }
 

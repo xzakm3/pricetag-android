@@ -3,10 +3,12 @@ package com.example.pricetag.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.annotation.NonNull;
+
+import com.example.pricetag.activities.ApplicationWrapper;
 
 public class Preferences {
-    public static void setAccessToken(@NonNull Context context, String token) {
+    public static void setAccessToken(String token) {
+        Context context = ApplicationWrapper.getAppContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences("app_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -14,12 +16,14 @@ public class Preferences {
         editor.apply();
     }
 
-    public static String getAccessToken(@NonNull Context context) {
+    public static String getAccessToken() {
+        Context context = ApplicationWrapper.getAppContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences("app_data", Context.MODE_PRIVATE);
         return sharedPreferences.getString("ACCESSTOKEN", null);
     }
 
-    public static void removeAccessToken(@NonNull Context context) {
+    public static void removeAccessToken() {
+        Context context = ApplicationWrapper.getAppContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences("app_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 

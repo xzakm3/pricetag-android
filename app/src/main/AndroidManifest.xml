@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="com.example.pricetag.activities.ApplicationWrapper">
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/login">

@@ -66,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Preferences.removeAccessToken(this);
+        // Preferences.removeAccessToken();
         
-        if (Preferences.getAccessToken(this) != null) {
+        if (Preferences.getAccessToken() != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.example.pricetag.templates.index.IndexFragment;
 import com.example.pricetag.R;
-import com.example.pricetag.data.model.ShoppingList;
+import com.example.pricetag.data.interfaces.ItemCallbacks;
+import com.example.pricetag.data.model.Item;
+import com.example.pricetag.data.repositories.list.ShoppingListRepository;
+import com.example.pricetag.templates.index.IndexFragment;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ListsFragment extends IndexFragment {
@@ -19,22 +20,19 @@ public class ListsFragment extends IndexFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         return super.onCreateView(inflater, container, savedInstanceState, this);
     }
 
     @Override
     public void loadData() {
-        this.data = generateData();
         this.headingText = R.string.lists_heading;
+        ShoppingListRepository.getShoppingLists(this);
     }
 
-    private List<ShoppingList> generateData() {
-        List<ShoppingList> d = Arrays.asList(
-                new ShoppingList(1, "Sunday's specialty"),
-                new ShoppingList(2, "Thursday shopping"),
-                new ShoppingList(3, "Pancakes")
-        );
-        return d;
+
+
+    @Override
+    public void setItemData(List<? extends Item> data) {
+        setRecyclerData(data);
     }
 }

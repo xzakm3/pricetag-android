@@ -1,39 +1,40 @@
 package com.example.pricetag.data.model;
 
 import com.example.pricetag.utils.ItemType;
+import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
 
 public class Product extends Item {
-    private int id;
-    private String name;
+
     private int userId;
+
+    @SerializedName("created_at")
     private Timestamp createdAt;
+
+    @SerializedName("updated_at")
     private Timestamp updateAt;
 
     public Product(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        super(id, name);
     }
 
     @Override
     public String getName() {
-        return name;
+        return super.getName();
     }
 
     public ItemType getType() { return ItemType.PRODUCT; }
 
     public void setName(String name) {
-        this.name = name;
+        super.setName(name);
+    }
+
+    public Product(int id, String name, int userId, Timestamp createdAt, Timestamp updateAt) {
+        super(id, name);
+        this.userId = userId;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
     }
 
     public int getUserId() {
@@ -58,5 +59,10 @@ public class Product extends Item {
 
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
+    }
+
+    @Override
+    public String getEntity() {
+        return "products";
     }
 }

@@ -5,39 +5,32 @@ import com.example.pricetag.utils.ItemType;
 import java.sql.Timestamp;
 
 public class Shop extends Item {
-    private int id;
-    private String name;
     private String address;
     private int userId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public Shop(int id, String name, String address) {
-        this.id = id;
-        this.name = name;
+    public Shop(int id, String name, String address, int userId, Timestamp createdAt, Timestamp updatedAt) {
+        super(id, name);
         this.address = address;
+        this.userId = userId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+    public Shop(int id, String name, String address) {
+        super(id, name);
+        this.address = address;
     }
 
     @Override
     public ItemType getType() { return ItemType.SHOP; }
 
     public void setName(String name) {
-        this.name = name;
+        super.setName(name);
     }
+
+    public String getName() { return super.getName(); }
 
     public String getAddress() {
         return address;
@@ -69,5 +62,10 @@ public class Shop extends Item {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String getEntity() {
+        return "shops";
     }
 }

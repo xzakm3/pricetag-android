@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
+import com.example.pricetag.data.interfaces.Itemable;
 import com.example.pricetag.data.model.Item;
 import com.example.pricetag.templates.ActionController;
 import com.example.pricetag.utils.ItemType;
@@ -19,15 +19,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> {
-    private List<? extends Item> items;
+    private List<Itemable> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private ItemType itemType;
+    private Context context;
+    private IndexFragment fragment;
 
     // data is passed into the constructor
-    IndexAdapter(Context context, List<? extends Item> data) {
+    public IndexAdapter(Context context, List<Itemable> data, IndexFragment fragment) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
+        this.context = context;
+        this.fragment = fragment;
     }
 
     // inflates the row layout from xml when needed
@@ -43,7 +47,7 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
         String name = items.get(position).getName();
         holder.itemTextView.setText(name);
 
-        Item item = items.get(0);
+        Itemable item = items.get(0);
         holder.setItemType(item.getType());
 
         int id = items.get(position).getId();
@@ -55,10 +59,10 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
             }
         });
 
-        holder.deleteActionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int itemId = holder.getId();
-            }
+        holder.deleteActionButton.setOnClickListener(v -> {
+            int itemId = holder.getId();
+            fragment.deleteData(itemId);
+
         });
 
     }
