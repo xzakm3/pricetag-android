@@ -29,6 +29,12 @@ public class Item implements Itemable {
         return name;
     }
 
+    @Override
+    public String getEntity() {
+        return null;
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }

@@ -1,5 +1,6 @@
 package com.example.pricetag.templates.index;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,15 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
     private List<Itemable> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context context;
+    private IndexFragment fragment;
 
     // data is passed into the constructor
-    public IndexAdapter(Context context, List<Itemable> data) {
+    public IndexAdapter(Context context, List<Itemable> data, IndexFragment fragment) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
+        this.context = context;
+        this.fragment = fragment;
     }
 
     // inflates the row layout from xml when needed
@@ -50,10 +55,10 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
             }
         });
 
-        holder.deleteActionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int itemId = holder.getId();
-            }
+        holder.deleteActionButton.setOnClickListener(v -> {
+            int itemId = holder.getId();
+            fragment.deleteData(itemId);
+
         });
 
     }

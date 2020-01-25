@@ -15,8 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
 import com.example.pricetag.activities.ApplicationWrapper;
+import com.example.pricetag.data.interfaces.Deletable;
+import com.example.pricetag.data.interfaces.ItemCallbacks;
 import com.example.pricetag.data.interfaces.Itemable;
 import com.example.pricetag.data.model.Item;
+import com.example.pricetag.data.repositories.ItemRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
-abstract public class IndexFragment extends Fragment implements Loadable {
+abstract public class IndexFragment extends Fragment implements Loadable, Deletable, ItemCallbacks {
 
     @BindView(R.id.headingTextView)
     TextView headingTextView;
@@ -39,17 +42,17 @@ abstract public class IndexFragment extends Fragment implements Loadable {
     @BindView(R.id.recyclerView)
     protected RecyclerView recyclerView;
 
-    protected RecyclerView.Adapter indexAdapter;
+    private RecyclerView.Adapter indexAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     protected List<Itemable> data;
-    protected List<Itemable> fetchedData;
+    private List<Itemable> fetchedData;
 
     protected int headingText;
 
 
     protected View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState, IndexFragment fragment) {
+                                ViewGroup container, Bundle savedInstanceState, IndexFragment fragment) {
 
         View view = inflater.inflate(R.layout.fragment_index, container, false);
         ButterKnife.bind(this, view);
@@ -62,7 +65,6 @@ abstract public class IndexFragment extends Fragment implements Loadable {
 
         return view;
     }
-
 
 
     private void loadContent() {
@@ -82,25 +84,23 @@ abstract public class IndexFragment extends Fragment implements Loadable {
 
 
     @Override
-    public void loadData() {}
+    public void loadData() {
+    }
 
-    protected void handleSearchResults(View view) {
+    private void handleSearchResults(View view) {
 
-        if(indexAdapter != null) {
+        if (indexAdapter != null) {
             List<Itemable> searchResults = new ArrayList<>();
 
             String search = searchTextView.getText().toString();
 
-            for(Itemable item : fetchedData) {
-                if (item.getName().contains(search)) {
+            for (Itemable item : fetchedData) {
+                if (item.getName().toLowerCase().contains(search.toLowerCase())) {
                     searchResults.add(item);
                 }
             }
 
-
-            data.clear();
-            data.addAll(searchResults);
-            indexAdapter.notifyDataSetChanged();
+            resetRecyclerData(searchResults);
 
             if (searchResults.size() == 0) {
                 Toasty.info(ApplicationWrapper.getAppContext(), "No results found", Toast.LENGTH_SHORT, true).show();
@@ -109,5 +109,35 @@ abstract public class IndexFragment extends Fragment implements Loadable {
     }
 
 
+    protected void setRecyclerData(List<? extends Item> items) {
+        this.fetchedData = new ArrayList<>(items);
+        this.data = new ArrayList<>(items);
 
+        indexAdapter = new IndexAdapter(getActivity(), data, this);
+        recyclerView.setAdapter(indexAdapter);
+    }
+
+    void deleteData(int id) {
+        ItemRepository.deleteItem(id, data.get(0).getEntity(), this);
+    }
+
+    @Override
+    public void afterDelete(int id) {
+        for(Itemable item : fetchedData) {
+            if (item.getId() == id) {
+                fetchedData.remove(item);
+            }
+        }
+
+        resetRecyclerData(fetchedData);
+    }
+
+    private void resetRecyclerData(List<Itemable> newData) {
+        data.clear();
+        data.addAll(newData);
+        indexAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setItemData(List<? extends Item> data) { }
 }

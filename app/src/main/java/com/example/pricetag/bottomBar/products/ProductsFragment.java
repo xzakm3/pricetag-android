@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.example.pricetag.data.interfaces.ItemCallbacks;
+import com.example.pricetag.data.model.Item;
 import com.example.pricetag.data.repositories.product.ProductRepository;
 import com.example.pricetag.templates.index.IndexAdapter;
 import com.example.pricetag.templates.index.IndexFragment;
@@ -16,7 +18,7 @@ import com.example.pricetag.data.model.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsFragment extends IndexFragment implements ProductCallbacks {
+public class ProductsFragment extends IndexFragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,17 +35,8 @@ public class ProductsFragment extends IndexFragment implements ProductCallbacks 
     }
 
     @Override
-    public void setProductData(List<Product> products) {
-        this.fetchedData = new ArrayList<>(products);
-        this.data = new ArrayList<>(products);
-
-        indexAdapter = new IndexAdapter(getActivity(), data);
-        recyclerView.setAdapter(indexAdapter);
+    public void setItemData(List<? extends Item> data) {
+        setRecyclerData(data);
     }
 
-    @Override
-    protected void handleSearchResults(View view) {
-        super.handleSearchResults(view);
-
-    }
 }

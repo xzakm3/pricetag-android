@@ -1,12 +1,12 @@
-package com.example.pricetag.data.repositories.product;
+package com.example.pricetag.data.repositories.shop;
 
 import android.widget.Toast;
 
 import com.example.pricetag.activities.ApplicationWrapper;
 import com.example.pricetag.data.interfaces.ItemCallbacks;
-import com.example.pricetag.data.model.Product;
-import com.example.pricetag.services.ProductService;
+import com.example.pricetag.data.model.Shop;
 import com.example.pricetag.services.RetrofitInstance;
+import com.example.pricetag.services.ShopService;
 
 import java.util.List;
 
@@ -15,23 +15,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductRepository {
+public class ShopRepository {
 
-    private static final ProductService service = RetrofitInstance.get().create(ProductService.class);
+    private static final ShopService service = RetrofitInstance.get().create(ShopService.class);
 
-    public static void getProducts(ItemCallbacks callbacks) {
-        Call<List<Product>> call = service.getProducts();
+    public static void getShops(ItemCallbacks callbacks) {
+        Call<List<Shop>> call = service.getShops();
 
-        call.enqueue(new Callback<List<Product>>() {
+        call.enqueue(new Callback<List<Shop>>() {
             @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+            public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
                 if (response.isSuccessful()) {
                     callbacks.setItemData(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
+            public void onFailure(Call<List<Shop>> call, Throwable t) {
                 Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
             }
 

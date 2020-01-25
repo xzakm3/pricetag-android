@@ -53,4 +53,9 @@ public class Shop extends Item {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String getEntity() {
+        return "shops";
+    }
 }
