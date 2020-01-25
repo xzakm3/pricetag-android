@@ -1,18 +1,19 @@
 package com.example.pricetag.templates.index;
 
-import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
 import com.example.pricetag.data.interfaces.Itemable;
 import com.example.pricetag.data.model.Item;
+import com.example.pricetag.templates.ActionController;
+import com.example.pricetag.utils.ItemType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
     private List<Itemable> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private ItemType itemType;
     private Context context;
     private IndexFragment fragment;
 
@@ -45,13 +47,15 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
         String name = items.get(position).getName();
         holder.itemTextView.setText(name);
 
+        Itemable item = items.get(0);
+        holder.setItemType(item.getType());
+
         int id = items.get(position).getId();
         holder.setId(id);
 
         holder.editActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // int itemId = holder.getId();
-                Navigation.findNavController(v).navigate(R.id.action_navigation_products_to_item_action_fragment);
+                holder.handleEditClickEvent(v);
             }
         });
 
@@ -76,6 +80,7 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
         TextView itemTextView;
         FloatingActionButton editActionButton;
         FloatingActionButton deleteActionButton;
+        ItemType itemType;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -92,9 +97,26 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
             return this.id;
         }
 
+        void setItemType(ItemType itemType) { this.itemType = itemType; }
+
+        ItemType getItemType() { return this.itemType; }
+
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        void handleEditClickEvent(View v) {
+            int itemId = this.getId();
+            ItemType itemType = this.getItemType();
+            String action = "edit";
+
+            Bundle data = new Bundle();
+            data.putInt("id", itemId);
+            data.putSerializable("itemType", itemType);
+            data.putString("action", action);
+
+            ActionController.execute(v, itemType, data);
         }
     }
 

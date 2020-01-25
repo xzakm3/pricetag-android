@@ -1,6 +1,7 @@
 package com.example.pricetag.data.model;
 
 import com.example.pricetag.data.interfaces.Itemable;
+import com.example.pricetag.utils.ItemType;
 import com.google.gson.annotations.SerializedName;
 
 public class Item implements Itemable {
@@ -34,6 +35,10 @@ public class Item implements Itemable {
         return null;
     }
 
+    @Override
+    public ItemType getType() {
+        return null;
+    }
 
     public void setName(String name) {
         this.name = name;

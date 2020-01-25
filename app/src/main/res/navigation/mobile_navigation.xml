@@ -24,17 +24,32 @@
         android:id="@+id/navigation_shops"
         android:name="com.example.pricetag.bottomBar.shops.ShopsFragment"
         android:label="@string/title_shops"
-        tools:layout="@layout/fragment_shops" />
+        tools:layout="@layout/fragment_shops" >
+        <action
+            android:id="@+id/action_navigation_shops_to_item_action_fragment"
+            app:destination="@id/item_action_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_lists"
         android:name="com.example.pricetag.bottomBar.lists.ListsFragment"
         android:label="@string/title_lists"
-        tools:layout="@layout/fragment_lists" />
+        tools:layout="@layout/fragment_lists" >
+        <action
+            android:id="@+id/action_navigation_lists_to_item_action_fragment"
+            app:destination="@id/item_action_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/item_action_fragment"
         android:name="com.example.pricetag.templates.action.ItemActionFragment"
         android:label="@string/title_item_action"
-        tools:layout="@layout/fragment_item_action" />
+        tools:layout="@layout/fragment_item_action" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="type"
+            app:argType="com.example.pricetag.utils.ItemType" />
+    </fragment>
 </navigation>

@@ -32,6 +32,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="horizontal"
+        android:visibility="visible"
         android:weightSum="8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headingLinearLayout">
@@ -65,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:weightSum="8"
         app:layout_constraintTop_toBottomOf="@+id/nameLinearLayout">
 
@@ -117,14 +119,13 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="3" />
 
-        <TextView
-            android:id="@+id/actionTextView"
+        <EditText
+            android:id="@+id/numberEditText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_weight="2"
             android:gravity="center_horizontal|center_vertical"
-            android:text="quantity"
             android:textSize="18dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -169,9 +170,10 @@
         android:id="@+id/cancelButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="275dp"
         android:background="#7AA39898"
         android:text="Cancel"
-        app:layout_constraintTop_toBottomOf="@+id/dropdownWithActionLinearLayout" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

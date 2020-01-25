@@ -19,6 +19,9 @@ import com.example.pricetag.data.interfaces.Deletable;
 import com.example.pricetag.data.interfaces.ItemCallbacks;
 import com.example.pricetag.data.interfaces.Itemable;
 import com.example.pricetag.data.model.Item;
+import com.example.pricetag.templates.ActionController;
+import com.example.pricetag.utils.ItemType;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.example.pricetag.data.repositories.ItemRepository;
 
 import java.util.ArrayList;
@@ -38,6 +41,9 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
 
     @BindView(R.id.searchButton)
     Button searchButton;
+
+    @BindView(R.id.createActionButton)
+    FloatingActionButton createActionButton;
 
     @BindView(R.id.recyclerView)
     protected RecyclerView recyclerView;
@@ -60,12 +66,20 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
 
         fragment.loadData();
         loadContent();
-
+        setButtonListeners();
         searchButton.setOnClickListener(this::handleSearchResults);
 
         return view;
     }
 
+    private void setButtonListeners() {
+        createActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleCreateClickButton(view);
+            }
+        });
+    }
 
     private void loadContent() {
         loadHeading();
@@ -119,6 +133,17 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
 
     void deleteData(int id) {
         ItemRepository.deleteItem(id, data.get(0).getEntity(), this);
+    }
+
+    private void handleCreateClickButton(View v) {
+        ItemType itemType = this.data.get(0).getType();
+        String action = "create";
+
+        Bundle data = new Bundle();
+        data.putSerializable("itemType", itemType);
+        data.putString("action", action);
+
+        ActionController.execute(v, itemType, data);
     }
 
     @Override
