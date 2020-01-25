@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pricetag.R;
 import com.example.pricetag.data.model.Item;
 import com.example.pricetag.data.model.Product;
+import com.example.pricetag.templates.ActionParameters;
+import com.example.pricetag.utils.ItemType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
@@ -52,6 +55,9 @@ public class ItemActionFragment extends Fragment {
     @BindView(R.id.addActionButton)
     FloatingActionButton addActionButton;
 
+    @BindView(R.id.addressLinearLayout)
+    LinearLayout addressLinearLayout;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -60,23 +66,29 @@ public class ItemActionFragment extends Fragment {
 
     protected List<? extends Item> data;
     protected int headingText;
+    ItemActionTemplate itemActionTemplate;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.fragment_item_action, container, false);
         ButterKnife.bind(this, view);
 
-        loadData();
+        loadData(getArguments());
         loadContent();
 
 
         return view;
     }
 
-    private void loadData() {
+    private void loadData(Bundle bundle) {
+        int id = bundle.getInt("id");
+        ItemType itemType = (ItemType) bundle.getSerializable("itemType");
+        String action = bundle.getString("action");
+        ActionParameters params = new ActionParameters(id, itemType, action);
+        itemActionTemplate = new ItemActionTemplate(params.getHeadingText(), "Name", itemType);
+
         this.data = generatedata();
     }
 
@@ -96,12 +108,16 @@ public class ItemActionFragment extends Fragment {
     }
 
     private void loadContent() {
-        loadHeading();
+        loadTemplate();
         loadRecyclerView();
     }
 
-    private void loadHeading() {
-        this.headingTextView.setText(R.string.shops_heading);
+    private void loadTemplate() {
+        this.headingTextView.setText(itemActionTemplate.getHeadingText());
+        this.nameTextView.setText(itemActionTemplate.getNameTextViewContent());
+        this.itemToChooseTextView.setText(itemActionTemplate.getItemToChooseContent());
+        this.numberEditText.setHint(itemActionTemplate.getNumberEditTextContent());
+        this.addressLinearLayout.setVisibility(itemActionTemplate.getVisibility());
     }
 
     private void loadRecyclerView() {

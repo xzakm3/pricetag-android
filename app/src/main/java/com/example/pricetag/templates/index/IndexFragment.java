@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
 import com.example.pricetag.data.model.Item;
+import com.example.pricetag.templates.ActionController;
+import com.example.pricetag.utils.ItemType;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -29,6 +32,9 @@ public class IndexFragment extends Fragment implements Loadable {
 
     @BindView(R.id.searchButton)
     Button searchButton;
+
+    @BindView(R.id.createActionButton)
+    FloatingActionButton createActionButton;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -48,10 +54,19 @@ public class IndexFragment extends Fragment implements Loadable {
 
         fragment.loadData();
         loadContent();
+        setButtonListeners();
 
         return view;
     }
 
+    private void setButtonListeners() {
+        createActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleCreateClickButton(view);
+            }
+        });
+    }
 
 
     private void loadContent() {
@@ -71,6 +86,17 @@ public class IndexFragment extends Fragment implements Loadable {
         recyclerView.setAdapter(indexAdapter);
 
 
+    }
+
+    private void handleCreateClickButton(View v) {
+        ItemType itemType = this.data.get(0).getType();
+        String action = "create";
+
+        Bundle data = new Bundle();
+        data.putSerializable("itemType", itemType);
+        data.putString("action", action);
+
+        ActionController.execute(v, itemType, data);
     }
 
     @Override

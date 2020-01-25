@@ -1,5 +1,7 @@
 package com.example.pricetag.data.model;
 
+import com.example.pricetag.utils.ItemType;
+
 import java.sql.Timestamp;
 
 public class Shop extends Item {
@@ -29,6 +31,9 @@ public class Shop extends Item {
     public String getName() {
         return name;
     }
+
+    @Override
+    public ItemType getType() { return ItemType.SHOP; }
 
     public void setName(String name) {
         this.name = name;
