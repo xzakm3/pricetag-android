@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
-import com.example.pricetag.data.model.Item;
-import com.example.pricetag.data.model.Product;
+import com.example.pricetag.data.interfaces.Itemable;
+import com.example.pricetag.data.model.ActionFragmentItem;
 import com.example.pricetag.templates.ActionParameters;
 import com.example.pricetag.utils.ItemType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,10 +61,10 @@ public class ItemActionFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private RecyclerView.Adapter indexAdapter;
+    private RecyclerView.Adapter itemActionAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    protected List<? extends Item> data;
+    protected List<ActionFragmentItem> data;
     protected int headingText;
     ItemActionTemplate itemActionTemplate;
 
@@ -77,6 +77,7 @@ public class ItemActionFragment extends Fragment {
 
         loadData(getArguments());
         loadContent();
+        setButtonListeners();
 
 
         return view;
@@ -89,22 +90,7 @@ public class ItemActionFragment extends Fragment {
         ActionParameters params = new ActionParameters(id, itemType, action);
         itemActionTemplate = new ItemActionTemplate(params.getHeadingText(), "Name", itemType);
 
-        this.data = generatedata();
-    }
-
-    private List<? extends Item> generatedata() {
-        return Arrays.asList(
-                new Product(1, "Orange"),
-                new Product(2, "Lemon"),
-                new Product(3, "Potato"),
-                new Product(4, "Pepper"),
-                new Product(5, "Cucumber"),
-                new Product(6, "Rice"),
-                new Product(7, "Bread"),
-                new Product(8, "Milk"),
-                new Product(9, "Sugar"),
-                new Product(10, "Slat")
-        );
+        // this.data = RequestForData; <-- here do request for data
     }
 
     private void loadContent() {
@@ -124,7 +110,29 @@ public class ItemActionFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        // indexAdapter = new IndexAdapter(getActivity(), this.data, this);
-        recyclerView.setAdapter(indexAdapter);
+        itemActionAdapter = new ItemActionAdapter(getActivity(), new ArrayList<>());
+        recyclerView.setAdapter(itemActionAdapter);
+    }
+
+    private void setButtonListeners() {
+        addActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleAddItemClickEvent(view);
+            }
+        });
+    }
+
+    private void handleAddItemClickEvent(View view) {
+//        int number = Integer.parseInt(numberEditText.getText().toString());
+//        String text = "text";
+//
+//        ActionFragmentItem item = new ActionFragmentItem(text, number);
+//        items.add(item);
+//
+//
+//        data.clear();
+//        data.addAll(items);
+//        itemActionAdapter.notifyDataSetChanged();
     }
 }
