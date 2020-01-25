@@ -10,18 +10,19 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
+import com.example.pricetag.data.interfaces.Itemable;
 import com.example.pricetag.data.model.Item;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> {
-    private List<? extends Item> items;
+    private List<Itemable> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public IndexAdapter(Context context, List<? extends Item> data) {
+    public IndexAdapter(Context context, List<Itemable> data) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
     }

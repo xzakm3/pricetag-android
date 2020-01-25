@@ -3,33 +3,20 @@ package com.example.pricetag.data.model;
 import java.sql.Timestamp;
 
 public class ShoppingList extends Item {
-    private int id;
-    private String name;
     private int userId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
+
     public ShoppingList(int id, String name) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public ShoppingList(int id, String name, int userId, Timestamp createdAt, Timestamp updatedAt) {
+        super(id, name);
+        this.userId = userId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public int getUserId() {

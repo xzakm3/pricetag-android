@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.example.pricetag.data.interfaces.Itemable;
 import com.example.pricetag.templates.index.IndexFragment;
 import com.example.pricetag.R;
 import com.example.pricetag.data.model.Shop;
@@ -28,8 +29,8 @@ public class ShopsFragment extends IndexFragment {
         this.headingText = R.string.shops_heading;
     }
 
-    private List<Shop> generateData() {
-        List<Shop> d = Arrays.asList(
+    private List<Itemable> generateData() {
+        List<Itemable> d = Arrays.asList(
                 new Shop(1, "LIDL", "French address 1"),
                 new Shop(2, "Super U", "French address 2"),
                 new Shop(1, "Carrefour", "French address 3")

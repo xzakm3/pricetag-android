@@ -13,9 +13,11 @@ import com.example.pricetag.templates.index.IndexFragment;
 import com.example.pricetag.R;
 import com.example.pricetag.data.model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsFragment extends IndexFragment implements ProductCallbacks {
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,10 +34,16 @@ public class ProductsFragment extends IndexFragment implements ProductCallbacks 
 
     @Override
     public void setProductData(List<Product> products) {
-        this.data = products;
+        this.fetchedData = new ArrayList<>(products);
+        this.data = new ArrayList<>(products);
 
         indexAdapter = new IndexAdapter(getActivity(), data);
         recyclerView.setAdapter(indexAdapter);
     }
 
+    @Override
+    protected void handleSearchResults(View view) {
+        super.handleSearchResults(view);
+
+    }
 }

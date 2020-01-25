@@ -6,12 +6,6 @@ import java.sql.Timestamp;
 
 public class Product extends Item {
 
-    @SerializedName("id")
-    private int id;
-
-    @SerializedName("name")
-    private String name;
-
     private int userId;
 
     @SerializedName("created_at")
@@ -21,26 +15,14 @@ public class Product extends Item {
     private Timestamp updateAt;
 
     public Product(int id, String name) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Product(int id, String name, int userId, Timestamp createdAt, Timestamp updateAt) {
+        super(id, name);
+        this.userId = userId;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
     }
 
     public int getUserId() {
