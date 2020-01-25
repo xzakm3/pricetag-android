@@ -2,7 +2,6 @@ package com.example.pricetag.data.repositories.user;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.preference.Preference;
 import android.widget.Toast;
 
 import com.example.pricetag.activities.LoginActivity;
@@ -61,7 +60,7 @@ public class UserRepository {
                     context.startActivity(intent);
 
                 } else {
-                    Toasty.error(context, "Whoops, something went wrong!", Toast.LENGTH_SHORT, true).show();
+                    Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT, true).show();
                 }
             }
 

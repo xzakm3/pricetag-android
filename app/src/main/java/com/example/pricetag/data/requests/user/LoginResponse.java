@@ -7,6 +7,9 @@ public class LoginResponse {
     @SerializedName("auth_token")
     private String token;
 
+    @SerializedName("message")
+    private String message;
+
     public LoginResponse(String token) {
         this.token = token;
     }
@@ -17,5 +20,13 @@ public class LoginResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

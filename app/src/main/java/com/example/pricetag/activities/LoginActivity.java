@@ -2,7 +2,6 @@ package com.example.pricetag.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -64,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        
         if (Preferences.getAccessToken(this) != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
