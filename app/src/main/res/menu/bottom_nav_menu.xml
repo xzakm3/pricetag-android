@@ -8,17 +8,17 @@
 
     <item
         android:id="@+id/navigation_products"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@android:drawable/ic_input_get"
         android:title="@string/title_products" />
 
     <item
         android:id="@+id/navigation_shops"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@android:drawable/ic_lock_lock"
         android:title="@string/title_shops" />
 
     <item
         android:id="@+id/navigation_lists"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/title_lists" />
 
 </menu>
