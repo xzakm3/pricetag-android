@@ -1,4 +1,4 @@
-package com.example.pricetag.templates.action;
+package com.example.pricetag.templates.calculate;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,23 +9,23 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
-import com.example.pricetag.data.interfaces.Itemable;
-import com.example.pricetag.data.model.ActionFragmentItem;
-import com.example.pricetag.data.model.Item;
-import com.example.pricetag.data.model.ItemToCalculate;
+import com.example.pricetag.bottomBar.home.HomeFragment;
+import com.example.pricetag.data.interfaces.ItemToCalculatable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.ViewHolder> {
-    private List<ItemToCalculate> items;
+public class HomeActionAdapter extends RecyclerView.Adapter<HomeActionAdapter.ViewHolder> {
+    private List<ItemToCalculatable> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private HomeFragment fragment;
 
     // data is passed into the constructor
-    public ItemActionAdapter(Context context, List<ItemToCalculate> data) {
+    public HomeActionAdapter(Context context, List<ItemToCalculatable> data, HomeFragment fragment) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
+        this.fragment = fragment;
     }
 
     // inflates the row layout from xml when needed
@@ -41,7 +41,6 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
         int productId = items.get(position).getId();
         holder.setProductId(productId);
 
-
         String name = items.get(position).getName();
         holder.nameTextView.setText(name);
 
@@ -51,6 +50,15 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
 
         holder.deleteActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                int position = 0;
+                for (int i = 0; i < items.size(); i++) {
+                    ItemToCalculatable item = items.get(i);
+                    if(holder.getProductId() == item.getId()) {
+                        position = i;
+                        break;
+                    }
+                }
+                fragment.removeAt(position);
 
             }
         });
@@ -116,3 +124,4 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
         void onItemClick(View view, int position);
     }
 }
+

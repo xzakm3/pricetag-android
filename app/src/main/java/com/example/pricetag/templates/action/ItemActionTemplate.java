@@ -7,10 +7,7 @@ import com.example.pricetag.utils.ItemType;
 public class ItemActionTemplate {
     private String headingText;
     private String nameTextViewContent;
-    private String itemToChooseContent;
-    private String numberEditTextContent;
     private ItemType itemType;
-    private int visibility;
 
     public ItemActionTemplate(String headingText, String nameTextViewContent, ItemType itemType) {
         this.headingText = headingText;
@@ -31,10 +28,6 @@ public class ItemActionTemplate {
             return View.VISIBLE;
         }
         return View.GONE;
-    }
-
-    public void setVisibility(int visibility) {
-        this.visibility = visibility;
     }
 
     public String getHeadingText() {
@@ -60,18 +53,10 @@ public class ItemActionTemplate {
         return "Shops";
     }
 
-    public void setItemToChooseContent(String itemToChooseContent) {
-        this.itemToChooseContent = itemToChooseContent;
-    }
-
     public String getNumberEditTextContent() {
         if(itemType.equals(ItemType.SHOP) || itemType.equals(ItemType.PRODUCT)) {
             return "put price";
         }
         return "quantity";
-    }
-
-    public void setNumberEditTextContent(String numberEditTextContent) {
-        this.numberEditTextContent = numberEditTextContent;
     }
 }

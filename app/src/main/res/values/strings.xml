@@ -30,4 +30,7 @@
     <string name="login">Log in</string>
     <string name="loginFieldsError">Please fill all fields</string>
     <string name="signupFieldsError">Passwords needs to be the same. All fields are mandatory.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

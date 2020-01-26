@@ -143,7 +143,7 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
         data.putSerializable("itemType", itemType);
         data.putString("action", action);
 
-        ActionController.execute(v, itemType, data);
+        ActionController.executeCreateEditAction(v, itemType, data);
     }
 
     @Override
