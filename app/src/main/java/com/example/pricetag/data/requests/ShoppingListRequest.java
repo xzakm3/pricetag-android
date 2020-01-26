@@ -23,6 +23,10 @@ public class ShoppingListRequest extends BaseRequest {
     @Override
     public boolean validate() {
 
+        if (shoppingList.getName() == null || shoppingList.getName().equals("")) {
+            return false;
+        }
+
         return true;
     }
 }
