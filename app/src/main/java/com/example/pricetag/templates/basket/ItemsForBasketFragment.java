@@ -38,11 +38,11 @@ public class ItemsForBasketFragment extends Fragment implements ItemCallbacks {
     @BindView(R.id.headingTextView)
     TextView headingTextView;
 
-    @BindView(R.id.searchEditText)
-    EditText searchEditText;
+//    @BindView(R.id.searchEditText)
+//    EditText searchEditText;
 
-    @BindView(R.id.searchButton)
-    Button searchButton;
+//    @BindView(R.id.searchButton)
+//    Button searchButton;
 
     @BindView(R.id.confirmButton)
     Button cofirmButton;

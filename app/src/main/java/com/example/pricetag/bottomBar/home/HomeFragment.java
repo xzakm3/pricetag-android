@@ -38,8 +38,8 @@ public class HomeFragment extends Fragment implements CalculateCallbacks {
     @BindView(R.id.addProductButton)
     Button addProductButton;
 
-    @BindView(R.id.addListButton)
-    Button addListButton;
+//    @BindView(R.id.addListButton)
+//    Button addListButton;
 
     @BindView(R.id.calculateButton)
     Button calculateButton;
@@ -83,11 +83,11 @@ public class HomeFragment extends Fragment implements CalculateCallbacks {
             ActionController.executeHomeToBasketProductsAction(view, data);
         });
 
-        addListButton.setOnClickListener(view -> {
-            Bundle data = new Bundle();
-            data.putString("url", "shopping_lists");
-            ActionController.executeHomeToBasketProductsAction(view, data);
-        });
+//        addListButton.setOnClickListener(view -> {
+//            Bundle data = new Bundle();
+//            data.putString("url", "shopping_lists");
+//            ActionController.executeHomeToBasketProductsAction(view, data);
+//        });
 
         calculateButton.setOnClickListener(view -> {
             List<CalculateProduct> calculateProductList = new ArrayList<>();
@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment implements CalculateCallbacks {
             }
 
             CalculateItemsRequest request = new CalculateItemsRequest(calculateProductList);
+
 
             if (request.validateRequest()) {
                 ItemRepository.calculate(request, this, view);

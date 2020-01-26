@@ -32,36 +32,6 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/nameLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headingLinearLayout">
-
-        <EditText
-            android:id="@+id/searchEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="3dp"
-            android:ems="10"
-            android:hint="@string/search_edit_text_hint"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/search_button_text" />
-    </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemsToBasketRecyclerView"
         android:layout_width="394dp"
@@ -69,7 +39,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameLinearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/headingLinearLayout">
 
     </androidx.recyclerview.widget.RecyclerView>
 

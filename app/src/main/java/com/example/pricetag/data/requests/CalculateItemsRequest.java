@@ -1,9 +1,14 @@
 package com.example.pricetag.data.requests;
 
+import android.widget.Toast;
+
+import com.example.pricetag.activities.ApplicationWrapper;
 import com.example.pricetag.data.model.CalculateProduct;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class CalculateItemsRequest extends BaseRequest {
     @SerializedName("products")
@@ -23,6 +28,10 @@ public class CalculateItemsRequest extends BaseRequest {
 
     @Override
     public boolean validateRequest() {
+        if(calculateProductList.size() == 0) {
+            String message = "You have add some products to basket to calculate price";
+            Toasty.error(ApplicationWrapper.getAppContext(), message, Toast.LENGTH_SHORT, true).show();
+        }
         return true;
     }
 }
