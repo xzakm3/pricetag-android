@@ -176,7 +176,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
     }
 
     private void afterRecyclerAdd(ProductInShop productInShop) {
-        int idToFind = -1;
+        Integer idToFind = null;
 
         if (params.getItemType() == ItemType.PRODUCT) {
             idToFind = productInShop.getShopId();
@@ -187,7 +187,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         int toRemove = 0;
 
         for (int i = 0; i < spinnerCurrentData.size(); i++) {
-            if (spinnerCurrentData.get(i).getId() == idToFind) {
+            if (spinnerCurrentData.get(i).getId().equals(idToFind)) {
                 toRemove = i;
                 break;
             }
@@ -196,6 +196,8 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         spinnerCurrentData.remove(toRemove);
 
         spinnerAdapter.notifyDataSetChanged();
+
+        numberEditText.setText("");
     }
 
     @Override
@@ -206,11 +208,62 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         spinnerAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, spinnerCurrentData);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         itemToChooseSpinner.setAdapter(spinnerAdapter);
+
+        if (params.getTypeOfAction().equals("edit")) {
+            initializeEditData();
+        }
     }
 
     @Override
     public void afterCreate(View view) {
         ActionController.executeFromItemAction(view, params);
+    }
+
+    @Override
+    public void afterItemLoad(Itemable item) {
+        if (params.getItemType() == ItemType.PRODUCT) {
+            Product product = (Product) item;
+            initializeProductEditData(product);
+        } else if (params.getItemType() == ItemType.SHOP) {
+            Shop shop = (Shop) item;
+            initializeShopEditData(shop);
+        } else {
+
+        }
+    }
+
+    @Override
+    public void afterUpdate(View view) {
+
+    }
+
+    public void initializeProductEditData(Product product) {
+        if (product != null) {
+            nameEditText.setText(product.getName());
+
+            // Initialize recycler view
+            for (ProductInShop productInShop : product.getProductInShopAttributes()) {
+                productInShop.syncShop();
+                data.add(productInShop);
+                itemActionAdapter.notifyDataSetChanged();
+                afterRecyclerAdd(productInShop);
+            }
+        }
+    }
+
+    public void initializeShopEditData(Shop shop) {
+        if (shop != null) {
+            nameEditText.setText(shop.getName());
+            addressEditText.setText(shop.getAddress());
+
+            // Initialize recycler view
+            for (ProductInShop productInShop : shop.getProductInShopAttributes()) {
+                productInShop.syncProduct();
+                data.add(productInShop);
+                itemActionAdapter.notifyDataSetChanged();
+                afterRecyclerAdd(productInShop);
+            }
+        }
     }
 
     void deleteData(int position) {
@@ -263,7 +316,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         ProductRequest productRequest = new ProductRequest(product);
 
         if (productRequest.validateRequest()) {
-            ProductRepository.createItem(productRequest,  this, view);
+            ProductRepository.createProduct(productRequest,  this, view);
         }
     }
 
@@ -289,4 +342,14 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
 
 
 
+
+    private void initializeEditData() {
+        if (params.getItemType() == ItemType.PRODUCT) {
+            ProductRepository.getProduct(params.getId(), this);
+        } else if (params.getItemType() == ItemType.SHOP) {
+            ShopRepository.getShop(params.getId(), this);
+        } else {
+            // TODO - IDGAF
+        }
+    }
 }

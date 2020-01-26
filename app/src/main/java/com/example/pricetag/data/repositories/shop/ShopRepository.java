@@ -58,4 +58,43 @@ public class ShopRepository {
 
         });
     }
+
+
+    public static void updateShop(ShopRequest item, ItemCallbacks callbacks, View view) {
+        Call<Void> call = service.createShop(item);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callbacks.afterUpdate(view);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
+            }
+
+        });
+    }
+
+    public static void getShop(int id, ItemCallbacks callbacks) {
+        Call<Shop> call = service.getShops(id);
+
+        call.enqueue(new Callback<Shop>() {
+            @Override
+            public void onResponse(Call<Shop> call, Response<Shop> response) {
+                if (response.isSuccessful()) {
+                    callbacks.afterItemLoad(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Shop> call, Throwable t) {
+                Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
+            }
+
+        });
+    }
 }

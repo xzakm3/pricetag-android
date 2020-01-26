@@ -9,6 +9,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface ProductService {
 
@@ -17,5 +19,11 @@ public interface ProductService {
 
     @POST("/products")
     Call<Void> createProduct(@Body ProductRequest itemRequest);
+
+    @PUT("/products")
+    Call<Void> updateProduct(@Body ProductRequest itemRequest);
+
+    @GET("/products/{id}")
+    Call<Product> getProduct(@Path("id") int id);
 }
 

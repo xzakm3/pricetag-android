@@ -40,7 +40,7 @@ public class ProductRepository {
         });
     }
 
-    public static void createItem(ProductRequest item, ItemCallbacks callbacks, View view) {
+    public static void createProduct(ProductRequest item, ItemCallbacks callbacks, View view) {
         Call<Void> call = service.createProduct(item);
 
         call.enqueue(new Callback<Void>() {
@@ -53,6 +53,44 @@ public class ProductRepository {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
+            }
+
+        });
+    }
+
+    public static void updateProduct(ProductRequest item, ItemCallbacks callbacks, View view) {
+        Call<Void> call = service.createProduct(item);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callbacks.afterUpdate(view);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
+            }
+
+        });
+    }
+
+    public static void getProduct(int id, ItemCallbacks callbacks) {
+        Call<Product> call = service.getProduct(id);
+
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                if (response.isSuccessful()) {
+                    callbacks.afterItemLoad(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
                 Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
             }
 

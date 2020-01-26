@@ -143,13 +143,18 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
 
     @Override
     public void afterDelete(int id) {
+        Itemable toDelete = null;
         for(Itemable item : fetchedData) {
             if (item.getId() == id) {
-                fetchedData.remove(item);
+                toDelete = item;
+                break;
             }
         }
 
-        resetRecyclerData(fetchedData);
+        if (toDelete != null) {
+            fetchedData.remove(toDelete);
+            resetRecyclerData(fetchedData);
+        }
     }
 
     private void resetRecyclerData(List<Itemable> newData) {
@@ -162,7 +167,11 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
     public void setItemData(List<? extends Item> data) { this.setRecyclerData(data); }
 
     @Override
-    public void afterCreate(View view) {
+    public void afterCreate(View view) { }
 
-    }
+    @Override
+    public void afterItemLoad(Itemable item) { }
+
+    @Override
+    public void afterUpdate(View view) { }
 }

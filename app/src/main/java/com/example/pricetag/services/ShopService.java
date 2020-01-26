@@ -9,6 +9,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface ShopService {
 
@@ -17,6 +19,12 @@ public interface ShopService {
 
     @POST("/shops")
     Call<Void> createShop(@Body ShopRequest shopRequest);
+
+    @PUT("/shops")
+    Call<Void> updateShop(@Body ShopRequest shopRequest);
+
+    @GET("/shops/{id}")
+    Call<Shop> getShops(@Path("id") int id);
 
 }
 

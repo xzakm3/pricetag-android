@@ -21,6 +21,12 @@ public class ProductInShop implements ActionFragmentItemable {
     @SerializedName("_destroy")
     private Integer destroy;
 
+    @SerializedName("shop")
+    private Shop shop;
+
+    @SerializedName("product")
+    private Product product;
+
     private transient String productName;
 
     private transient String shopName;
@@ -99,5 +105,15 @@ public class ProductInShop implements ActionFragmentItemable {
         }
 
         return getProductId();
+    }
+
+    public void syncShop() {
+        shopName = shop.getName();
+        shopId = shop.getId();
+    }
+
+    public void syncProduct() {
+        productName = product.getName();
+        productId = product.getId();
     }
 }

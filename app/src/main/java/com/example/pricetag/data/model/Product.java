@@ -17,7 +17,7 @@ public class Product extends Item {
     @SerializedName("updated_at")
     private Timestamp updateAt;
 
-    @SerializedName("product_in_shops_attributes")
+    @SerializedName(value="product_in_shops_attributes", alternate={"product_in_shops"})
     private List<ProductInShop> productInShopAttributes = new ArrayList<>();
 
     public Product(Integer id, String name) {
