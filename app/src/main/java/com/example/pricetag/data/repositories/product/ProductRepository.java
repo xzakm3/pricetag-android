@@ -59,8 +59,8 @@ public class ProductRepository {
         });
     }
 
-    public static void updateProduct(ProductRequest item, ItemCallbacks callbacks, View view) {
-        Call<Void> call = service.createProduct(item);
+    public static void updateProduct(int id, ProductRequest item, ItemCallbacks callbacks, View view) {
+        Call<Void> call = service.updateProduct(id, item);
 
         call.enqueue(new Callback<Void>() {
             @Override

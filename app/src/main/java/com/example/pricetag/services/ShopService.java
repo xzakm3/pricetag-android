@@ -20,8 +20,8 @@ public interface ShopService {
     @POST("/shops")
     Call<Void> createShop(@Body ShopRequest shopRequest);
 
-    @PUT("/shops")
-    Call<Void> updateShop(@Body ShopRequest shopRequest);
+    @PUT("/shops/{id}")
+    Call<Void> updateShop(@Path("id") int id, @Body ShopRequest shopRequest);
 
     @GET("/shops/{id}")
     Call<Shop> getShops(@Path("id") int id);

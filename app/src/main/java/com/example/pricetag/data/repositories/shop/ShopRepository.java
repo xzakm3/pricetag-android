@@ -60,8 +60,8 @@ public class ShopRepository {
     }
 
 
-    public static void updateShop(ShopRequest item, ItemCallbacks callbacks, View view) {
-        Call<Void> call = service.createShop(item);
+    public static void updateShop(int id, ShopRequest item, ItemCallbacks callbacks, View view) {
+        Call<Void> call = service.updateShop(id, item);
 
         call.enqueue(new Callback<Void>() {
             @Override

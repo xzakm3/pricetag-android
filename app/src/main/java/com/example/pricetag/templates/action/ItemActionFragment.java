@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -233,9 +234,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
     }
 
     @Override
-    public void afterUpdate(View view) {
-
-    }
+    public void afterUpdate(View view) { ActionController.executeFromItemAction(view, params); }
 
     public void initializeProductEditData(Product product) {
         if (product != null) {
@@ -266,19 +265,38 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         }
     }
 
+    /**
+     * Deletes data by position from the recycler and also handles
+     * spinner add or removal of deleted item.
+     * Made by ANDREJ SCANSY
+     * @param position position of item in the recycler view
+     */
     void deleteData(int position) {
+        // TODO - delete the item
+        // TODO - mark the destroy flag as 1
+        // TODO - hide from the interface
+
+
         ProductInShop productInShop = (ProductInShop) data.get(position);
         int idToFind = productInShop.getDependant(params);
 
 
+        // Spinner all data
         for (Itemable item : spinnerFetchedData) {
+            // Find shop or product
             if (item.getId() == idToFind) {
+                // Add it back to the spinner
                 spinnerCurrentData.add(item);
                 break;
             }
         }
 
-        data.remove(position);
+        if(productInShop.getId() == null) {
+            data.remove(position);
+        } else {
+            productInShop.setDestroy(1);
+        }
+
         itemActionAdapter.notifyDataSetChanged();
         spinnerAdapter.notifyDataSetChanged();
     }
@@ -305,22 +323,24 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
 
 
     private void handleProductCreate(View view) {
-        Product product = new Product(null, nameEditText.getText().toString());
+        ProductRequest productRequest = getProductPayload();
+        if (productRequest.validateRequest()) {
+            ProductRepository.createProduct(productRequest,  this, view);
+        }
+    }
 
+    private ProductRequest getProductPayload() {
+        Product product = new Product(null, nameEditText.getText().toString());
 
         for (ActionFragmentItemable itemable : data) {
             ProductInShop productInShop = (ProductInShop) itemable;
             product.getProductInShopAttributes().add(productInShop);
         }
 
-        ProductRequest productRequest = new ProductRequest(product);
-
-        if (productRequest.validateRequest()) {
-            ProductRepository.createProduct(productRequest,  this, view);
-        }
+        return new ProductRequest(product);
     }
 
-    private void handleShopCreate(View view) {
+    private ShopRequest getShopPayload() {
         Shop shop = new Shop(null, nameEditText.getText().toString(), addressEditText.getText().toString());
 
         for (ActionFragmentItemable itemable : data) {
@@ -328,7 +348,11 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
             shop.getProductInShopAttributes().add(productInShop);
         }
 
-        ShopRequest shopRequest = new ShopRequest(shop);
+        return new ShopRequest(shop);
+    }
+
+    private void handleShopCreate(View view) {
+        ShopRequest shopRequest = getShopPayload();
 
         if (shopRequest.validateRequest()) {
             ShopRepository.createShop(shopRequest, this, view);
@@ -337,9 +361,30 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
 
 
     private void handleUpdateItem(View view) {
+        if (params.getItemType() == ItemType.PRODUCT) {
+            this.handleProductUpdate(view);
+        } else if (params.getItemType() == ItemType.SHOP) {
+            this.handleShopUpdate(view);
+        } else {
 
+        }
     }
 
+    private void handleProductUpdate(View view) {
+        ProductRequest productRequest = getProductPayload();
+
+        if (productRequest.validateRequest()) {
+            ProductRepository.updateProduct(params.getId(), productRequest, this, view);
+        }
+    }
+
+    private void handleShopUpdate(View view) {
+        ShopRequest shopRequest = getShopPayload();
+
+        if (shopRequest.validateRequest()) {
+            ShopRepository.updateShop(params.getId(), shopRequest, this, view);
+        }
+    }
 
 
 

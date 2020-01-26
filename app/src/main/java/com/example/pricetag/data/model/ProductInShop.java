@@ -110,10 +110,12 @@ public class ProductInShop implements ActionFragmentItemable {
     public void syncShop() {
         shopName = shop.getName();
         shopId = shop.getId();
+        shop = null;
     }
 
     public void syncProduct() {
         productName = product.getName();
         productId = product.getId();
+        product = null;
     }
 }

@@ -20,8 +20,8 @@ public interface ProductService {
     @POST("/products")
     Call<Void> createProduct(@Body ProductRequest itemRequest);
 
-    @PUT("/products")
-    Call<Void> updateProduct(@Body ProductRequest itemRequest);
+    @PUT("/products/{id}")
+    Call<Void> updateProduct(@Path("id") int id, @Body ProductRequest itemRequest);
 
     @GET("/products/{id}")
     Call<Product> getProduct(@Path("id") int id);

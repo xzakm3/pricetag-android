@@ -44,11 +44,13 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
         holder.nameTextView.setText(name);
 
         holder.deleteActionButton.setOnClickListener(v -> {
-            // TODO - delete the item
-            // TODO - mark the destroy flag as 1
-            // TODO - hide from the interface
             fragment.deleteData(position);
         });
+
+        if (items.get(position).getDestroy() != null && items.get(position).getDestroy().equals(1)) {
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
 
     }
 
