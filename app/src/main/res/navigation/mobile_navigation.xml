@@ -81,5 +81,9 @@
         android:id="@+id/calculatedResultsFragment"
         android:name="com.example.pricetag.templates.results.CalculatedResultsFragment"
         android:label="fragment_calculated_results"
-        tools:layout="@layout/fragment_calculated_results" />
+        tools:layout="@layout/fragment_calculated_results" >
+        <action
+            android:id="@+id/action_calculatedResultsFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

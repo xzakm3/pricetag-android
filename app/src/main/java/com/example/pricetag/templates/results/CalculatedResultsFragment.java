@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.pricetag.R;
 import com.example.pricetag.data.requests.CalculateItemResponse;
+import com.example.pricetag.templates.ActionController;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class CalculatedResultsFragment extends Fragment {
 
     @BindView(R.id.resultsRecyclerView)
     RecyclerView resultsRecyclerView;
+
+    @BindView(R.id.backToHomeButton)
+    Button backToHomeButton;
 
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter itemsForResultsAdapter;
@@ -45,6 +50,7 @@ public class CalculatedResultsFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         loadContent(getArguments());
+        setButtonClickListeners();
 
         return view;
     }
@@ -60,6 +66,12 @@ public class CalculatedResultsFragment extends Fragment {
     void loadContent(Bundle data) {
         this.data = (List<CalculateItemResponse>)data.getSerializable("data");
         loadRecyclerView();
+    }
+
+    void setButtonClickListeners() {
+        backToHomeButton.setOnClickListener(view -> {
+            ActionController.executeFromCalculatedResultsToHome(view);
+        });
     }
 
 }

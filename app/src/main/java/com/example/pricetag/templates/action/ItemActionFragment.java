@@ -81,6 +81,9 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
     @BindView(R.id.confirmButton)
     Button confirmButton;
 
+    @BindView(R.id.cancelButton)
+    Button cancelButton;
+
     private RecyclerView.Adapter itemActionAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -153,6 +156,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
     private void setButtonListeners() {
         addActionButton.setOnClickListener(this::handleAddItemClickEvent);
         confirmButton.setOnClickListener(this::handleConfirmButton);
+        cancelButton.setOnClickListener(this::handleCancelButton);
     }
 
     private void handleAddItemClickEvent(View view) {
@@ -241,7 +245,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
 
     @Override
     public void afterCreate(View view) {
-        ActionController.executeFromItemAction(view, params);
+        ActionController.executeFromItemByConfirmButtonAction(view, params);
     }
 
     @Override
@@ -260,7 +264,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
     }
 
     @Override
-    public void afterUpdate(View view) { ActionController.executeFromItemAction(view, params); }
+    public void afterUpdate(View view) { ActionController.executeFromItemByCancelButtonAction(view, params); }
 
     private void initializeProductEditData(Product product) {
         if (product != null) {
@@ -373,6 +377,10 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         else {
             handleCreateItem(view);
         }
+    }
+
+    private void handleCancelButton(View view) {
+        ActionController.executeFromItemByCancelButtonAction(view, params);
     }
 
     private void handleCreateItem(View view) {

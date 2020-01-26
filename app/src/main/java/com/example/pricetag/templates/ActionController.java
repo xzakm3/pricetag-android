@@ -39,9 +39,7 @@ public class ActionController {
         navController.navigate(R.id.action_productsForBasketFragment_to_navigation_home);
     }
 
-    public static void executeFromItemAction(View view, ActionParameters parameters) {
-        String message = parameters.typeOfAction.equals("edit") ? "Item was edited successfuly!" : "Item was created successfuly";
-        Toasty.success(ApplicationWrapper.getAppContext(), message, Toast.LENGTH_SHORT, true).show();
+    public static void executeFromAction(View view, ActionParameters parameters) {
         NavController navController = Navigation.findNavController(view);
 
         ItemType itemType = parameters.getItemType();
@@ -55,8 +53,23 @@ public class ActionController {
         }
     }
 
+    public static void executeFromItemByConfirmButtonAction(View view, ActionParameters parameters) {
+        String message = parameters.typeOfAction.equals("edit") ? "Item was edited successfuly!" : "Item was created successfuly";
+        Toasty.success(ApplicationWrapper.getAppContext(), message, Toast.LENGTH_SHORT, true).show();
+        executeFromAction(view, parameters);
+    }
+
     public static void executeBasketoToResultsAction(View v, Bundle data) {
         NavController navController = get(v);
         navController.navigate(R.id.action_navigation_home_to_calculatedResultsFragment, data);
+    }
+
+    public static void executeFromItemByCancelButtonAction(View view, ActionParameters parameters) {
+        executeFromAction(view, parameters);
+    }
+
+    public static void executeFromCalculatedResultsToHome(View view) {
+        NavController navController = get(view);
+        navController.navigate(R.id.action_calculatedResultsFragment_to_navigation_home);
     }
 }
