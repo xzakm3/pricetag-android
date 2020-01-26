@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme"
         android:name="com.example.pricetag.activities.ApplicationWrapper">
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".activities.LoginActivity"
             android:label="@string/login">
             <intent-filter>
@@ -24,10 +25,12 @@
         </activity>
 
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".activities.SignupActivity"
             android:label="@string/action_sign_up"></activity>
 
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
 
     </application>
 

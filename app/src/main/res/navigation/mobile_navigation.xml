@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.pricetag.bottomBar.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_productsForBasketFragment"
+            app:destination="@id/productsForBasketFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_products"
@@ -60,5 +64,14 @@
         <action
             android:id="@+id/action_item_action_fragment_to_navigation_products"
             app:destination="@id/navigation_products" />
+    </fragment>
+    <fragment
+        android:id="@+id/productsForBasketFragment"
+        android:name="com.example.pricetag.templates.basket.ItemsForBasketFragment"
+        android:label="fragment_products_for_basket"
+        tools:layout="@layout/fragment_items_for_basket" >
+        <action
+            android:id="@+id/action_productsForBasketFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 </navigation>

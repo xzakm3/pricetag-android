@@ -2,7 +2,6 @@ package com.example.pricetag.templates.index;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
 import com.example.pricetag.data.interfaces.Itemable;
-import com.example.pricetag.data.model.Item;
 import com.example.pricetag.templates.ActionController;
 import com.example.pricetag.utils.ItemType;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -128,7 +126,7 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.ViewHolder> 
             data.putSerializable("itemType", itemType);
             data.putString("action", action);
 
-            ActionController.execute(v, itemType, data);
+            ActionController.executeCreateEditAction(v, itemType, data);
         }
     }
 
