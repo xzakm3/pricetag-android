@@ -6,22 +6,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item implements Itemable {
     @SerializedName("id")
-    private int id;
+    private Integer id;
 
     @SerializedName("name")
     private String name;
 
-    public Item(int id, String name) {
+    public Item(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
     @Override
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -36,11 +36,21 @@ public class Item implements Itemable {
     }
 
     @Override
+    public float getNumber() {
+        return 0;
+    }
+
+    @Override
     public ItemType getType() {
         return null;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

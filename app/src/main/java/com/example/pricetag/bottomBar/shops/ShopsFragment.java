@@ -33,10 +33,4 @@ public class ShopsFragment extends IndexFragment {
         ShopRepository.getShops(this);
     }
 
-
-
-    @Override
-    public void setItemData(List<? extends Item> data) {
-        setRecyclerData(data);
-    }
 }

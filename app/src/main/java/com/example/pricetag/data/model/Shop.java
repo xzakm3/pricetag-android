@@ -1,16 +1,29 @@
 package com.example.pricetag.data.model;
 
 import com.example.pricetag.utils.ItemType;
+import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Shop extends Item {
+
+    private transient int userId;
+
+    @SerializedName("address")
     private String address;
-    private int userId;
+
+    @SerializedName("created_at")
     private Timestamp createdAt;
+
+    @SerializedName("updated_at")
     private Timestamp updatedAt;
 
-    public Shop(int id, String name, String address, int userId, Timestamp createdAt, Timestamp updatedAt) {
+    @SerializedName(value="product_in_shops_attributes", alternate={"product_in_shops"})
+    private List<ProductInShop> productInShopAttributes = new ArrayList<>();
+
+    public Shop(Integer id, String name, String address, int userId, Timestamp createdAt, Timestamp updatedAt) {
         super(id, name);
         this.address = address;
         this.userId = userId;
@@ -18,7 +31,7 @@ public class Shop extends Item {
         this.updatedAt = updatedAt;
     }
 
-    public Shop(int id, String name, String address) {
+    public Shop(Integer id, String name, String address) {
         super(id, name);
         this.address = address;
     }
@@ -62,6 +75,14 @@ public class Shop extends Item {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<ProductInShop> getProductInShopAttributes() {
+        return productInShopAttributes;
+    }
+
+    public void setProductInShopAttributes(List<ProductInShop> productInShopAttributes) {
+        this.productInShopAttributes = productInShopAttributes;
     }
 
     @Override

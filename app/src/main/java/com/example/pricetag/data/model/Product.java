@@ -4,10 +4,12 @@ import com.example.pricetag.utils.ItemType;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product extends Item {
 
-    private int userId;
+    private transient Integer userId;
 
     @SerializedName("created_at")
     private Timestamp createdAt;
@@ -15,33 +17,32 @@ public class Product extends Item {
     @SerializedName("updated_at")
     private Timestamp updateAt;
 
-    public Product(int id, String name) {
+    @SerializedName(value="product_in_shops_attributes", alternate={"product_in_shops"})
+    private List<ProductInShop> productInShopAttributes = new ArrayList<>();
+
+    public Product(Integer id, String name) {
         super(id, name);
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
+    public Product(Integer id, String name, List<ProductInShop> productInShopAttributes) {
+        super(id, name);
+        this.productInShopAttributes = productInShopAttributes;
     }
 
     public ItemType getType() { return ItemType.PRODUCT; }
 
-    public void setName(String name) {
-        super.setName(name);
-    }
-
-    public Product(int id, String name, int userId, Timestamp createdAt, Timestamp updateAt) {
+    public Product(Integer id, String name, int userId, Timestamp createdAt, Timestamp updateAt) {
         super(id, name);
         this.userId = userId;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -61,8 +62,21 @@ public class Product extends Item {
         this.updateAt = updateAt;
     }
 
+    public List<ProductInShop> getProductInShopAttributes() {
+        return productInShopAttributes;
+    }
+
+    public void setProductInShopAttributes(List<ProductInShop> productInShopAttributes) {
+        this.productInShopAttributes = productInShopAttributes;
+    }
+
     @Override
     public String getEntity() {
         return "products";
+    }
+
+    @Override
+    public float getNumber() {
+        return 0;
     }
 }

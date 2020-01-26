@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pricetag.R;
 import com.example.pricetag.data.interfaces.ItemCallbacks;
 import com.example.pricetag.data.interfaces.ItemToCalculatable;
+import com.example.pricetag.data.interfaces.Itemable;
 import com.example.pricetag.data.model.Item;
 import com.example.pricetag.data.model.ItemToCalculate;
 import com.example.pricetag.data.repositories.product.ProductRepository;
@@ -128,6 +129,21 @@ public class ItemsForBasketFragment extends Fragment implements ItemCallbacks {
     public void setItemData(List<? extends Item> data) {
         this.data = ProductToItemToCalculateMapper.map(data);
         loadRecyclerView();
+    }
+
+    @Override
+    public void afterCreate(View view) {
+
+    }
+
+    @Override
+    public void afterItemLoad(Itemable item) {
+
+    }
+
+    @Override
+    public void afterUpdate(View view) {
+
     }
 
 }

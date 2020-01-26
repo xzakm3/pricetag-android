@@ -9,23 +9,22 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
-import com.example.pricetag.data.interfaces.Itemable;
-import com.example.pricetag.data.model.ActionFragmentItem;
-import com.example.pricetag.data.model.Item;
-import com.example.pricetag.data.model.ItemToCalculate;
+import com.example.pricetag.data.model.ActionFragmentItemable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.ViewHolder> {
-    private List<ItemToCalculate> items;
+
+    private List<ActionFragmentItemable> items;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private ItemActionFragment fragment;
 
-    // data is passed into the constructor
-    public ItemActionAdapter(Context context, List<ItemToCalculate> data) {
+    public ItemActionAdapter(Context context, List<ActionFragmentItemable> data, ItemActionFragment fragment) {
         this.mInflater = LayoutInflater.from(context);
         this.items = data;
+        this.fragment = fragment;
     }
 
     // inflates the row layout from xml when needed
@@ -38,22 +37,19 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        int productId = items.get(position).getId();
-        holder.setProductId(productId);
-
+        float number = items.get(position).getNumber();
+        holder.numberTextView.setText(String.valueOf(number));
 
         String name = items.get(position).getName();
         holder.nameTextView.setText(name);
-
-        int quantity = items.get(position).getQuantity();
-        holder.setQuantity(quantity);
-        holder.numberTextView.setText(""+quantity);
-
-        holder.deleteActionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-            }
+        holder.deleteActionButton.setOnClickListener(v -> {
+            fragment.deleteData(position);
         });
+
+        if (items.get(position).getDestroy() != null && items.get(position).getDestroy().equals(1)) {
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
 
     }
 
@@ -66,8 +62,6 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        int productId;
-        int quantity;
         TextView nameTextView;
         TextView numberTextView;
         FloatingActionButton deleteActionButton;
@@ -77,22 +71,6 @@ public class ItemActionAdapter extends RecyclerView.Adapter<ItemActionAdapter.Vi
             nameTextView = itemView.findViewById(R.id.nameTextView);
             numberTextView = itemView.findViewById(R.id.numberTextView);
             deleteActionButton = itemView.findViewById(R.id.deletefloatingActionButton);
-        }
-
-        int getQuantity() {
-            return this.quantity;
-        }
-
-        void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-
-        int getProductId() {
-            return this.productId;
-        }
-
-        void setProductId(int productId) {
-            this.productId = productId;
         }
 
         @Override

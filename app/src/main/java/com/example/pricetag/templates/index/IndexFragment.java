@@ -73,12 +73,7 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
     }
 
     private void setButtonListeners() {
-        createActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleCreateClickButton(view);
-            }
-        });
+        createActionButton.setOnClickListener(this::handleCreateClickButton);
     }
 
     private void loadContent() {
@@ -148,13 +143,18 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
 
     @Override
     public void afterDelete(int id) {
+        Itemable toDelete = null;
         for(Itemable item : fetchedData) {
             if (item.getId() == id) {
-                fetchedData.remove(item);
+                toDelete = item;
+                break;
             }
         }
 
-        resetRecyclerData(fetchedData);
+        if (toDelete != null) {
+            fetchedData.remove(toDelete);
+            resetRecyclerData(fetchedData);
+        }
     }
 
     private void resetRecyclerData(List<Itemable> newData) {
@@ -164,5 +164,14 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
     }
 
     @Override
-    public void setItemData(List<? extends Item> data) { }
+    public void setItemData(List<? extends Item> data) { this.setRecyclerData(data); }
+
+    @Override
+    public void afterCreate(View view) { }
+
+    @Override
+    public void afterItemLoad(Itemable item) { }
+
+    @Override
+    public void afterUpdate(View view) { }
 }

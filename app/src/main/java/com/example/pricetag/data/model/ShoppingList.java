@@ -1,13 +1,25 @@
 package com.example.pricetag.data.model;
 
 import com.example.pricetag.utils.ItemType;
+import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingList extends Item {
-    private int userId;
+
+    private transient int userId;
+
+    @SerializedName("created_at")
     private Timestamp createdAt;
+
+    @SerializedName("updated_at")
     private Timestamp updatedAt;
+
+
+    @SerializedName(value="product_in_shopping_lists_attributes", alternate={"product_in_shopping_lists"})
+    private List<ProductInShoppingList> productInShoppingLists = new ArrayList<>();
 
     @Override
     public ItemType getType() { return ItemType.SHOPPINGLIST; }
@@ -21,7 +33,7 @@ public class ShoppingList extends Item {
         super.setName(name);
     }
 
-    public ShoppingList(int id, String name) {
+    public ShoppingList(Integer id, String name) {
         super(id, name);
     }
 
@@ -32,7 +44,15 @@ public class ShoppingList extends Item {
         this.updatedAt = updatedAt;
     }
 
-    public int getUserId() {
+    public List<ProductInShoppingList> getProductInShoppingLists() {
+        return productInShoppingLists;
+    }
+
+    public void setProductInShoppingLists(List<ProductInShoppingList> productInShoppingLists) {
+        this.productInShoppingLists = productInShoppingLists;
+    }
+
+    public Integer getUserId() {
         return userId;
     }
 
