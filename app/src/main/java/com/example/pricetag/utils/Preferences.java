@@ -92,7 +92,7 @@ public class Preferences {
         setItemsForBasket(basketItems);
     }
 
-    public static void removeBasket() {
+    public static void removeBasketItems() {
         Context context = ApplicationWrapper.getAppContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences("app_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

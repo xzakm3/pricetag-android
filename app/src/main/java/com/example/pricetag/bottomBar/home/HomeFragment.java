@@ -24,10 +24,12 @@ import com.example.pricetag.templates.ActionController;
 import com.example.pricetag.templates.calculate.HomeActionAdapter;
 import com.example.pricetag.utils.Preferences;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.Action;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -97,7 +99,7 @@ public class HomeFragment extends Fragment implements CalculateCallbacks {
             CalculateItemsRequest request = new CalculateItemsRequest(calculateProductList);
 
             if (request.validateRequest()) {
-                ItemRepository.calculate(request, this);
+                ItemRepository.calculate(request, this, view);
             }
         });
 
@@ -117,7 +119,12 @@ public class HomeFragment extends Fragment implements CalculateCallbacks {
     }
 
     @Override
-    public void setCalculateData(List<CalculateItemResponse> data) {
+    public void setCalculateData(List<CalculateItemResponse> results, View view) {
         System.out.println("test");
+        Bundle bundleData = new Bundle();
+        bundleData.putSerializable("data", (Serializable) results);
+
+        Preferences.removeBasketItems();
+        ActionController.executeBasketoToResultsAction(view, bundleData);
     }
 }

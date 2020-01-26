@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_productsForBasketFragment"
             app:destination="@id/productsForBasketFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_calculatedResultsFragment"
+            app:destination="@id/calculatedResultsFragment" />
     </fragment>
 
     <fragment
@@ -74,4 +77,9 @@
             android:id="@+id/action_productsForBasketFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
+    <fragment
+        android:id="@+id/calculatedResultsFragment"
+        android:name="com.example.pricetag.templates.results.CalculatedResultsFragment"
+        android:label="fragment_calculated_results"
+        tools:layout="@layout/fragment_calculated_results" />
 </navigation>

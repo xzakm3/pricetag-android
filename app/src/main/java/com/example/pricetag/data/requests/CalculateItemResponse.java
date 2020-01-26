@@ -3,9 +3,10 @@ package com.example.pricetag.data.requests;
 import com.example.pricetag.data.model.ReportProduct;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CalculateItemResponse {
+public class CalculateItemResponse implements Serializable {
 
     @SerializedName("id")
     private Integer id;
@@ -20,11 +21,15 @@ public class CalculateItemResponse {
     @SerializedName("products_to_report")
     private List<ReportProduct> reportProducts;
 
-    public CalculateItemResponse(Integer id, String name, String address, List<ReportProduct> reportProducts) {
+    @SerializedName("total")
+    private float total;
+
+    public CalculateItemResponse(Integer id, String name, String address, List<ReportProduct> reportProducts, float total) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.reportProducts = reportProducts;
+        this.total = total;
     }
 
     public Integer getId() {
@@ -57,5 +62,13 @@ public class CalculateItemResponse {
 
     public void setReportProducts(List<ReportProduct> reportProducts) {
         this.reportProducts = reportProducts;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
     }
 }

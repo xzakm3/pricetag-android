@@ -1,5 +1,6 @@
 package com.example.pricetag.data.repositories;
 
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.pricetag.activities.ApplicationWrapper;
@@ -41,14 +42,14 @@ public class ItemRepository {
     }
 
 
-    public static void calculate(CalculateItemsRequest request, CalculateCallbacks callbacks) {
+    public static void calculate(CalculateItemsRequest request, CalculateCallbacks callbacks, View view) {
         Call<List<CalculateItemResponse>> call = service.calculate(request);
 
         call.enqueue(new Callback<List<CalculateItemResponse>>() {
             @Override
             public void onResponse(Call<List<CalculateItemResponse>> call, Response<List<CalculateItemResponse>> response) {
                 if (response.isSuccessful()) {
-                    callbacks.setCalculateData(response.body());
+                    callbacks.setCalculateData(response.body(), view);
                 }
             }
 
