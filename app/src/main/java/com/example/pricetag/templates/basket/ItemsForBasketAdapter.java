@@ -52,9 +52,6 @@ public class ItemsForBasketAdapter extends RecyclerView.Adapter<ItemsForBasketAd
 
         holder.setItem(itemToCalculatable);
 
-        int productId = itemToCalculatable.getId();
-        holder.setProductId(productId);
-
         String name = itemToCalculatable.getName();
         holder.nameTextView.setText(name);
 
@@ -103,8 +100,6 @@ public class ItemsForBasketAdapter extends RecyclerView.Adapter<ItemsForBasketAd
 
     // stores and recycles views as they are scrolled off screen
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        int productId;
-        int quantity;
         ItemToCalculatable item;
         TextView nameTextView;
         EditText numberEditText;
@@ -117,7 +112,6 @@ public class ItemsForBasketAdapter extends RecyclerView.Adapter<ItemsForBasketAd
             numberEditText = itemView.findViewById(R.id.numberEditText);
             checkBox = itemView.findViewById(R.id.itemCheck);
             checkBox.setOnClickListener(this);
-            //numberEditText.addTextChangedListener(myCustomEditTextListener);
             numberEditText.addTextChangedListener(new TextWatcher() {
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
                 public void afterTextChanged(Editable editable) {}
@@ -132,22 +126,6 @@ public class ItemsForBasketAdapter extends RecyclerView.Adapter<ItemsForBasketAd
 
         void setItem(ItemToCalculatable item) {
             this.item = item;
-        }
-
-        int getQuantity() {
-            return this.quantity;
-        }
-
-        void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-
-        int getProductId() {
-            return this.productId;
-        }
-
-        void setProductId(int productId) {
-            this.productId = productId;
         }
 
         @Override

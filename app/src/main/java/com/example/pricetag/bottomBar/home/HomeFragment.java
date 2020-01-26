@@ -124,6 +124,7 @@ public class HomeFragment extends Fragment implements CalculateCallbacks {
         Bundle bundleData = new Bundle();
         bundleData.putSerializable("data", (Serializable) results);
 
+        Preferences.removeBasketItems();
         ActionController.executeBasketoToResultsAction(view, bundleData);
     }
 }
