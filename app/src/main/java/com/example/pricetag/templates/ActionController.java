@@ -54,4 +54,9 @@ public class ActionController {
             navController.navigate(R.id.action_item_action_fragment_to_navigation_lists);
         }
     }
+
+    public static void executeBasketoToResultsAction(View v, Bundle data) {
+        NavController navController = get(v);
+        navController.navigate(R.id.action_navigation_home_to_calculatedResultsFragment, data);
+    }
 }

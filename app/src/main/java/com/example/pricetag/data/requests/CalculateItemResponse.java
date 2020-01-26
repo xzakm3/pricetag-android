@@ -3,9 +3,10 @@ package com.example.pricetag.data.requests;
 import com.example.pricetag.data.model.ReportProduct;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CalculateItemResponse {
+public class CalculateItemResponse implements Serializable {
 
     @SerializedName("id")
     private Integer id;
