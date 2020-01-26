@@ -12,20 +12,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pricetag.R;
+import com.example.pricetag.data.interfaces.CalculateCallbacks;
 import com.example.pricetag.data.interfaces.ItemToCalculatable;
+import com.example.pricetag.data.model.CalculateProduct;
 import com.example.pricetag.data.model.Item;
 import com.example.pricetag.data.model.ItemToCalculate;
+import com.example.pricetag.data.repositories.ItemRepository;
+import com.example.pricetag.data.requests.CalculateItemResponse;
+import com.example.pricetag.data.requests.CalculateItemsRequest;
 import com.example.pricetag.templates.ActionController;
 import com.example.pricetag.templates.calculate.HomeActionAdapter;
 import com.example.pricetag.utils.Preferences;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements CalculateCallbacks {
 
     @BindView(R.id.addProductButton)
     Button addProductButton;
@@ -69,28 +75,29 @@ public class HomeFragment extends Fragment {
     }
 
     void setButtonListeners() {
-        addProductButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle data = new Bundle();
-                data.putString("url", "products");
-                ActionController.executeHomeToBasketProductsAction(view, data);
-            }
+        addProductButton.setOnClickListener(view -> {
+            Bundle data = new Bundle();
+            data.putString("url", "products");
+            ActionController.executeHomeToBasketProductsAction(view, data);
         });
 
-        addListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle data = new Bundle();
-                data.putString("url", "shopping_lists");
-                ActionController.executeHomeToBasketProductsAction(view, data);
-            }
+        addListButton.setOnClickListener(view -> {
+            Bundle data = new Bundle();
+            data.putString("url", "shopping_lists");
+            ActionController.executeHomeToBasketProductsAction(view, data);
         });
 
-        calculateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        calculateButton.setOnClickListener(view -> {
+            List<CalculateProduct> calculateProductList = new ArrayList<>();
 
+            for(ItemToCalculatable item : data) {
+                calculateProductList.add(new CalculateProduct(item.getId(), item.getQuantity()));
+            }
+
+            CalculateItemsRequest request = new CalculateItemsRequest(calculateProductList);
+
+            if (request.validateRequest()) {
+                ItemRepository.calculate(request, this);
             }
         });
 
@@ -107,5 +114,10 @@ public class HomeFragment extends Fragment {
 
     public void removeFromStorage(ItemToCalculatable item) {
         Preferences.removeItemFromBasket(item);
+    }
+
+    @Override
+    public void setCalculateData(List<CalculateItemResponse> data) {
+        System.out.println("test");
     }
 }

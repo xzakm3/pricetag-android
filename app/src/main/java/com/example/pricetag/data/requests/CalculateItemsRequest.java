@@ -1,32 +1,28 @@
 package com.example.pricetag.data.requests;
 
+import com.example.pricetag.data.model.CalculateProduct;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class CalculateItemsRequest extends BaseRequest {
-    @SerializedName("id")
-    private int id;
+    @SerializedName("products")
+    private List<CalculateProduct> calculateProductList;
 
-    @SerializedName("quantity")
-    private int quantity;
-
-    public CalculateItemsRequest(int id, int quantity) {
-        this.id = id;
-        this.quantity = quantity;
+    public CalculateItemsRequest(List<CalculateProduct> calculateProductList) {
+        this.calculateProductList = calculateProductList;
     }
 
-    public int getId() {
-        return id;
+    public List<CalculateProduct> getCalculateProductList() {
+        return calculateProductList;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCalculateProductList(List<CalculateProduct> calculateProductList) {
+        this.calculateProductList = calculateProductList;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    @Override
+    public boolean validateRequest() {
+        return true;
     }
 }
