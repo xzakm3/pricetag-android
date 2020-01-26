@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,9 +24,13 @@ import com.example.pricetag.data.model.Item;
 import com.example.pricetag.data.model.Product;
 import com.example.pricetag.data.model.ProductInShop;
 import com.example.pricetag.data.model.ProductInShopBuilder;
+import com.example.pricetag.data.model.ProductInShoppingList;
 import com.example.pricetag.data.model.Shop;
+import com.example.pricetag.data.model.ShoppingList;
+import com.example.pricetag.data.repositories.list.ShoppingListRepository;
 import com.example.pricetag.data.repositories.product.ProductRepository;
 import com.example.pricetag.data.repositories.shop.ShopRepository;
+import com.example.pricetag.data.requests.ShoppingListRequest;
 import com.example.pricetag.data.requests.ProductRequest;
 import com.example.pricetag.data.requests.ShopRequest;
 import com.example.pricetag.templates.ActionController;
@@ -157,6 +160,13 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
             return;
         }
 
+
+        if (params.getItemType() == ItemType.SHOPPINGLIST) {
+            handleAddProductToList(view);
+            return;
+        }
+
+
         float number = Float.parseFloat(numberEditText.getText().toString());
         Itemable entity = (Itemable) itemToChooseSpinner.getSelectedItem();
 
@@ -166,8 +176,8 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
             pBuilder = pBuilder.setShopId(entity.getId()).setShopName(entity.getName());
         } else if (params.getItemType() == ItemType.SHOP) {
             pBuilder = pBuilder.setProductId(entity.getId()).setProductName(entity.getName());
-        } else {
         }
+
 
 
         ProductInShop product = pBuilder.build();
@@ -176,13 +186,27 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         afterRecyclerAdd(product);
     }
 
-    private void afterRecyclerAdd(ProductInShop productInShop) {
+    private void handleAddProductToList(View view) {
+        double d = Double.parseDouble(numberEditText.getText().toString());
+        Integer quantity = (int) d;
+        Itemable entity = (Itemable) itemToChooseSpinner.getSelectedItem();
+
+        ProductInShoppingList productInShoppingList = new ProductInShoppingList(null, entity.getId(), quantity, null, null, entity.getName());
+
+        data.add(productInShoppingList);
+        itemActionAdapter.notifyDataSetChanged();
+        afterRecyclerAdd(productInShoppingList);
+    }
+
+    private void afterRecyclerAdd(ActionFragmentItemable productInShop) {
         Integer idToFind = null;
 
         if (params.getItemType() == ItemType.PRODUCT) {
-            idToFind = productInShop.getShopId();
+            idToFind = ((ProductInShop)productInShop).getShopId();
         } else if (params.getItemType() == ItemType.SHOP) {
-            idToFind = productInShop.getProductId();
+            idToFind = ((ProductInShop)productInShop).getProductId();
+        } else {
+            idToFind = ((ProductInShoppingList)productInShop).getProductId();
         }
 
         int toRemove = 0;
@@ -229,6 +253,8 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
             Shop shop = (Shop) item;
             initializeShopEditData(shop);
         } else {
+            ShoppingList shoppingList = (ShoppingList) item;
+            initializeShopListEditData(shoppingList);
 
         }
     }
@@ -236,7 +262,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
     @Override
     public void afterUpdate(View view) { ActionController.executeFromItemAction(view, params); }
 
-    public void initializeProductEditData(Product product) {
+    private void initializeProductEditData(Product product) {
         if (product != null) {
             nameEditText.setText(product.getName());
 
@@ -250,7 +276,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         }
     }
 
-    public void initializeShopEditData(Shop shop) {
+    private void initializeShopEditData(Shop shop) {
         if (shop != null) {
             nameEditText.setText(shop.getName());
             addressEditText.setText(shop.getAddress());
@@ -265,21 +291,34 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         }
     }
 
+    private void initializeShopListEditData(ShoppingList shop) {
+        if (shop != null) {
+            nameEditText.setText(shop.getName());
+
+            for (ProductInShoppingList product : shop.getProductInShoppingLists()) {
+                product.syncProduct();
+                data.add(product);
+                itemActionAdapter.notifyDataSetChanged();
+                afterRecyclerAdd(product);
+            }
+        }
+
+    }
+
     /**
      * Deletes data by position from the recycler and also handles
      * spinner add or removal of deleted item.
-     * Made by ANDREJ SCANSY
      * @param position position of item in the recycler view
      */
     void deleteData(int position) {
-        // TODO - delete the item
-        // TODO - mark the destroy flag as 1
-        // TODO - hide from the interface
 
+        if (params.getItemType() == ItemType.SHOPPINGLIST) {
+            deleteShoppingListData(position);
+            return;
+        }
 
         ProductInShop productInShop = (ProductInShop) data.get(position);
         int idToFind = productInShop.getDependant(params);
-
 
         // Spinner all data
         for (Itemable item : spinnerFetchedData) {
@@ -301,13 +340,38 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         spinnerAdapter.notifyDataSetChanged();
     }
 
+    private void deleteShoppingListData(int position) {
+
+        ProductInShoppingList productInShop = (ProductInShoppingList) data.get(position);
+        int idToFind = productInShop.getProductId();
+
+        // Spinner all data
+        for (Itemable item : spinnerFetchedData) {
+            // Find shop or product
+            if (item.getId() == idToFind) {
+                // Add it back to the spinner
+                spinnerCurrentData.add(item);
+                break;
+            }
+        }
+
+        if(productInShop.getId() == null) {
+            data.remove(position);
+        } else {
+            productInShop.setDestroy(1);
+        }
+
+        itemActionAdapter.notifyDataSetChanged();
+        spinnerAdapter.notifyDataSetChanged();
+
+    }
+
     private void handleConfirmButton(View view) {
         if (params.getTypeOfAction().equals("edit") ) {
             handleUpdateItem(view);
-        } else if (params.getTypeOfAction().equals("create")) {
+        }
+        else {
             handleCreateItem(view);
-        } else {
-
         }
     }
 
@@ -317,7 +381,14 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         } else if (params.getItemType() == ItemType.SHOP) {
             this.handleShopCreate(view);
         } else {
+            this.handleShoppingListCreate(view);
+        }
+    }
 
+    private void handleShoppingListCreate(View view) {
+        ShoppingListRequest productRequest = getShoppingListRequest();
+        if (productRequest.validateRequest()) {
+            ShoppingListRepository.createShoppingList(productRequest,  this, view);
         }
     }
 
@@ -327,6 +398,18 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         if (productRequest.validateRequest()) {
             ProductRepository.createProduct(productRequest,  this, view);
         }
+    }
+
+    private ShoppingListRequest getShoppingListRequest() {
+        ShoppingList shoppingList = new ShoppingList(null, nameEditText.getText().toString());
+
+        for (ActionFragmentItemable itemable : data) {
+            ProductInShoppingList productInShop = (ProductInShoppingList) itemable;
+            shoppingList.getProductInShoppingLists().add(productInShop);
+        }
+
+        return new ShoppingListRequest(shoppingList);
+
     }
 
     private ProductRequest getProductPayload() {
@@ -366,7 +449,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         } else if (params.getItemType() == ItemType.SHOP) {
             this.handleShopUpdate(view);
         } else {
-
+            this.handleShoppingListUpdate(view);
         }
     }
 
@@ -386,7 +469,13 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         }
     }
 
+    private void handleShoppingListUpdate(View view) {
+        ShoppingListRequest shoppingListRequest = getShoppingListRequest();
 
+        if (shoppingListRequest.validateRequest()) {
+            ShoppingListRepository.updateShoppingList(params.getId(), shoppingListRequest,this, view);
+        }
+    }
 
     private void initializeEditData() {
         if (params.getItemType() == ItemType.PRODUCT) {
@@ -394,7 +483,7 @@ public class ItemActionFragment extends Fragment implements ItemCallbacks {
         } else if (params.getItemType() == ItemType.SHOP) {
             ShopRepository.getShop(params.getId(), this);
         } else {
-            // TODO - IDGAF
+            ShoppingListRepository.getShoppingList(params.getId(), this);
         }
     }
 }
