@@ -2,25 +2,25 @@ package com.example.pricetag.data.model;
 
 public class ProductInShopBuilder {
 
-    public int id;
+    public Integer id;
 
-    public int productId;
+    public Integer productId;
 
-    public int shopId;
+    public Integer shopId;
 
     public float price;
 
-    public int destroy;
+    public Integer destroy;
 
     public String shopName;
     public String productName;
 
-    public ProductInShopBuilder setProductId(int productId) {
+    public ProductInShopBuilder setProductId(Integer productId) {
         this.productId = productId;
         return this;
     }
 
-    public ProductInShopBuilder setShopId(int shopId) {
+    public ProductInShopBuilder setShopId(Integer shopId) {
         this.shopId = shopId;
         return this;
     }
@@ -30,12 +30,12 @@ public class ProductInShopBuilder {
         return this;
     }
 
-    public ProductInShopBuilder setDestroy(int destroy) {
+    public ProductInShopBuilder setDestroy(Integer destroy) {
         this.destroy = destroy;
         return this;
     }
 
-    public ProductInShopBuilder setId(int id) {
+    public ProductInShopBuilder setId(Integer id) {
         this.id = id;
         return this;
     }

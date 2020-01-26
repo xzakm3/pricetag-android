@@ -7,16 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.example.pricetag.data.interfaces.ItemCallbacks;
-import com.example.pricetag.data.model.Item;
-import com.example.pricetag.data.repositories.product.ProductRepository;
-import com.example.pricetag.templates.index.IndexAdapter;
-import com.example.pricetag.templates.index.IndexFragment;
 import com.example.pricetag.R;
-import com.example.pricetag.data.model.Product;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.pricetag.data.repositories.product.ProductRepository;
+import com.example.pricetag.templates.index.IndexFragment;
 
 public class ProductsFragment extends IndexFragment {
 
@@ -34,9 +27,5 @@ public class ProductsFragment extends IndexFragment {
         ProductRepository.getProducts(this);
     }
 
-    @Override
-    public void setItemData(List<? extends Item> data) {
-        setRecyclerData(data);
-    }
 
 }

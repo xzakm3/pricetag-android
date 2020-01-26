@@ -7,26 +7,26 @@ import com.google.gson.annotations.SerializedName;
 public class ProductInShop implements ActionFragmentItemable {
 
     @SerializedName("id")
-    private int id;
+    private Integer id;
 
     @SerializedName("product_id")
-    private int productId;
+    private Integer productId;
 
     @SerializedName("shop_id")
-    private int shopId;
+    private Integer shopId;
 
     @SerializedName("price")
     private float price;
 
     @SerializedName("_destroy")
-    private int destroy;
+    private Integer destroy;
 
-    private String productName;
+    private transient String productName;
 
-    private String shopName;
+    private transient String shopName;
 
 
-    public ProductInShop(ProductInShopBuilder builder) {
+    ProductInShop(ProductInShopBuilder builder) {
         this.id = builder.id;
         this.productId = builder.productId;
         this.shopId = builder.shopId;
@@ -37,27 +37,27 @@ public class ProductInShop implements ActionFragmentItemable {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 
-    public int getShopId() {
+    public Integer getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(Integer shopId) {
         this.shopId = shopId;
     }
 
@@ -69,17 +69,17 @@ public class ProductInShop implements ActionFragmentItemable {
         this.price = price;
     }
 
-    public int getDestroy() {
+    public Integer getDestroy() {
         return destroy;
     }
 
-    public void setDestroy(int destroy) {
+    public void setDestroy(Integer destroy) {
         this.destroy = destroy;
     }
 
     @Override
     public String getName() {
-        if (shopId > 0) {
+        if (shopId != null) {
             return shopName;
         }
 

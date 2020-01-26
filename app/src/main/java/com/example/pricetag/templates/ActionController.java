@@ -2,12 +2,16 @@ package com.example.pricetag.templates;
 
 import android.view.View;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.pricetag.R;
+import com.example.pricetag.activities.ApplicationWrapper;
 import com.example.pricetag.utils.ItemType;
+
+import es.dmoral.toasty.Toasty;
 
 public class ActionController {
     public static void execute(View v, ItemType itemType, Bundle data) {
@@ -20,4 +24,21 @@ public class ActionController {
             navController.navigate(R.id.action_navigation_lists_to_item_action_fragment, data);
         }
     }
+
+    public static void executeFromItemAction(View view, ActionParameters parameters) {
+        String message = parameters.typeOfAction.equals("edit") ? "Item was edited successfuly!" : "Item was created successfuly";
+        Toasty.success(ApplicationWrapper.getAppContext(), message, Toast.LENGTH_SHORT, true).show();
+        NavController navController = Navigation.findNavController(view);
+
+        ItemType itemType = parameters.getItemType();
+
+        if(itemType.equals(ItemType.PRODUCT)) {
+            navController.navigate(R.id.action_item_action_fragment_to_navigation_products);
+        } else if(itemType.equals(ItemType.SHOP)) {
+            navController.navigate(R.id.action_item_action_fragment_to_navigation_shops);
+        } else if(itemType.equals(ItemType.SHOPPINGLIST)) {
+            navController.navigate(R.id.action_item_action_fragment_to_navigation_lists);
+        }
+    }
+
 }

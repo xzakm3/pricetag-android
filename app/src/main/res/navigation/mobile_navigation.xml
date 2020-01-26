@@ -51,5 +51,14 @@
         <argument
             android:name="type"
             app:argType="com.example.pricetag.utils.ItemType" />
+        <action
+            android:id="@+id/action_item_action_fragment_to_navigation_lists"
+            app:destination="@id/navigation_lists" />
+        <action
+            android:id="@+id/action_item_action_fragment_to_navigation_shops"
+            app:destination="@id/navigation_shops" />
+        <action
+            android:id="@+id/action_item_action_fragment_to_navigation_products"
+            app:destination="@id/navigation_products" />
     </fragment>
 </navigation>

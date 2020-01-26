@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Product extends Item {
 
-    private int userId;
+    private transient Integer userId;
 
     @SerializedName("created_at")
     private Timestamp createdAt;
@@ -20,24 +20,29 @@ public class Product extends Item {
     @SerializedName("product_in_shops_attributes")
     private List<ProductInShop> productInShopAttributes = new ArrayList<>();
 
-    public Product(int id, String name) {
+    public Product(Integer id, String name) {
         super(id, name);
+    }
+
+    public Product(Integer id, String name, List<ProductInShop> productInShopAttributes) {
+        super(id, name);
+        this.productInShopAttributes = productInShopAttributes;
     }
 
     public ItemType getType() { return ItemType.PRODUCT; }
 
-    public Product(int id, String name, int userId, Timestamp createdAt, Timestamp updateAt) {
+    public Product(Integer id, String name, int userId, Timestamp createdAt, Timestamp updateAt) {
         super(id, name);
         this.userId = userId;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -55,6 +60,14 @@ public class Product extends Item {
 
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public List<ProductInShop> getProductInShopAttributes() {
+        return productInShopAttributes;
+    }
+
+    public void setProductInShopAttributes(List<ProductInShop> productInShopAttributes) {
+        this.productInShopAttributes = productInShopAttributes;
     }
 
     @Override

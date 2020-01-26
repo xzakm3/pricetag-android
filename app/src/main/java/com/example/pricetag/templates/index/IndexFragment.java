@@ -73,12 +73,7 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
     }
 
     private void setButtonListeners() {
-        createActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleCreateClickButton(view);
-            }
-        });
+        createActionButton.setOnClickListener(this::handleCreateClickButton);
     }
 
     private void loadContent() {
@@ -164,5 +159,10 @@ abstract public class IndexFragment extends Fragment implements Loadable, Deleta
     }
 
     @Override
-    public void setItemData(List<? extends Item> data) { }
+    public void setItemData(List<? extends Item> data) { this.setRecyclerData(data); }
+
+    @Override
+    public void afterCreate(View view) {
+
+    }
 }

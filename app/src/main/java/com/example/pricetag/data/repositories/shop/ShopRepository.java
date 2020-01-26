@@ -1,10 +1,12 @@
 package com.example.pricetag.data.repositories.shop;
 
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.pricetag.activities.ApplicationWrapper;
 import com.example.pricetag.data.interfaces.ItemCallbacks;
 import com.example.pricetag.data.model.Shop;
+import com.example.pricetag.data.requests.ShopRequest;
 import com.example.pricetag.services.RetrofitInstance;
 import com.example.pricetag.services.ShopService;
 
@@ -32,6 +34,25 @@ public class ShopRepository {
 
             @Override
             public void onFailure(Call<List<Shop>> call, Throwable t) {
+                Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
+            }
+
+        });
+    }
+
+    public static void createShop(ShopRequest item, ItemCallbacks callbacks, View view) {
+        Call<Void> call = service.createShop(item);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callbacks.afterCreate(view);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 Toasty.error(ApplicationWrapper.getAppContext(), t.getMessage(), Toast.LENGTH_SHORT, true).show();
             }
 

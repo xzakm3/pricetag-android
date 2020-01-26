@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Shop extends Item {
-    private int userId;
+
+    private transient int userId;
 
     @SerializedName("address")
     private String address;
@@ -22,7 +23,7 @@ public class Shop extends Item {
     @SerializedName("product_in_shops_attributes")
     private List<ProductInShop> productInShopAttributes = new ArrayList<>();
 
-    public Shop(int id, String name, String address, int userId, Timestamp createdAt, Timestamp updatedAt) {
+    public Shop(Integer id, String name, String address, int userId, Timestamp createdAt, Timestamp updatedAt) {
         super(id, name);
         this.address = address;
         this.userId = userId;
@@ -30,7 +31,7 @@ public class Shop extends Item {
         this.updatedAt = updatedAt;
     }
 
-    public Shop(int id, String name, String address) {
+    public Shop(Integer id, String name, String address) {
         super(id, name);
         this.address = address;
     }
@@ -74,6 +75,14 @@ public class Shop extends Item {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<ProductInShop> getProductInShopAttributes() {
+        return productInShopAttributes;
+    }
+
+    public void setProductInShopAttributes(List<ProductInShop> productInShopAttributes) {
+        this.productInShopAttributes = productInShopAttributes;
     }
 
     @Override
